@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight</title>
+    <!-- css -->
+    <link rel="stylesheet" href="~/Assets/Client/style.css">
+    <!-- font-awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- ajax -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- datetime picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo"><i class="fab fa-telegram-plane"></i>FLIGHT</div>
+        <div class="menu">
+            <a href="/Home/Index" class="item">Trang chủ</a>
+            @*<a href="#" class="item">Khuyến mãi</a>*@
+            <a href="#" class="item">Đã lưu</a>
+            <a href="#" class="item">Lịch sử đặt vé</a>
+            <button class="item btn-primary">Đăng nhập</button>
+        </div>
+    </header>
+
+    <div class="main">
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+    <!-- script -->
+    <script src="~/Assets/Client/script.js"></script>
+
+    <!-- Datetimepicker -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner">
+    <img src="~/Assets/images/banner-flight.jpg">
+    <div class="heading">
+        <h1>Đặt vé máy bay nội địa, quốc tế siêu tiết kiệm với hành trình như ý!</h1>
+    </div>
+    <div class="search">
+        <div class="box">
+            <div class="radio-group">
+                <label class="radio">
+                    <input type="radio" name="type" id="1" />
+                    <label for="1">Một chiều</label>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="type" id="2" />
+                    <label for="2">Khứ hồi</label>
+                </label>
+            </div>
+            <div class="detail">
+                <div class="container">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="form-group">
+                        <div class="place">
+                            <p class="title">Điểm đi</p>
+                            <input type="text" id="txtDiemDi" value="Ho Chi Minh City" />
+                            <div class="combobox" id="cbbDiemDi">
+                                <div class="title">
+                                    Địa điểm nổi bật
+                                </div>
+                                <div class="item">
+                                    Hồ Chí Minh
+                                </div>
+                                <div class="item">
+                                    Đà Nẵng
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Đồng Nai
+                                </div>
+                            </div>
+                        </div>
+                        <div class="place">
+                            <p class="title">Điểm đến</p>
+                            <input type="text" id="txtDiemDen" value="Hà Nội" />
+                            <div class="combobox" id="cbbDiemDen">
+                                <div class="title">
+                                    Địa điểm nổi bật
+                                </div>
+                                <div class="item">
+                                    Hồ Chí Minh
+                                </div>
+                                <div class="item">
+                                    Đà Nẵng
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Hà Nội
+                                </div>
+                                <div class="item">
+                                    Đồng Nai
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="container">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="form-group">
+                        <div class="date">
+                            <p class="title">Ngày đi</p>
+                            <input id="timeCheckIn" type="text" />
+                        </div>
+                        <div class="date">
+                            <p class="title">Ngày về</p>
+                            <input id="timeCheckOut" type="text" />
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <i class="fas fa-child"></i>
+                    <div class="form-group" id="frmKhach">
+                        <div class="passengers">
+                            <p class="title">Hành khách</p>
+                            <div class="content">
+                                <span>0</span>
+                                Người lớn,
+                                <span>0</span>
+                                Trẻ em,
+                                <span>0</span>
+                                Em bé
+                            </div>
+
+                        </div>
+                        <div class="passengers">
+                            <div class="arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="combobox" id="cbbKhach">
+                        <div class="item">
+                            <div class="icon"><i class="fas fa-walking"></i></div>
+                            <div class="content">
+                                <div class="left">
+                                    <p>Người lớn</p>
+                                    <p>>12 tuổi</p>
+                                </div>
+                                <div class="right">
+                                    <i class="fas fa-minus"></i>
+                                    <div>1</div>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="icon"><i class="fas fa-child"></i></div>
+                            <div class="content">
+                                <div class="left">
+                                    <p>Trẻ em</p>
+                                    <p>>2 tuổi & <12 tuổi</p>
+                                </div>
+                                <div class="right">
+                                    <i class="fas fa-minus"></i>
+                                    <div>1</div>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="icon"> <i class="fas fa-baby"></i></div>
+                            <div class="content">
+                                <div class="left">
+                                    <p>Em bé</p>
+                                    <p><2 tuổi</p>
+                                </div>
+                                <div class="right">
+                                    <i class="fas fa-minus"></i>
+                                    <div>1</div>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <i class="fas fa-couch"></i>
+                    <div class="form-group" id="frmLoaiGhe">
+                        <div class="passengers">
+                            <p class="title">Hạng ghế</p>
+                            <p>Thương gia</p>
+                        </div>
+                        <div class="passengers">
+                            <div class="arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="combobox" id="cbbLoaiGhe">
+                        <div class="item">
+                            Phổ thông
+                        </div>
+                        <div class="item">
+                            Phổ thông đặc biệt
+                        </div>
+                        <div class="item">
+                            Thương gia
+                        </div><div class="item">
+                            Hạng nhất
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button class="btn-primary">TÌM CHUYẾN BAY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
