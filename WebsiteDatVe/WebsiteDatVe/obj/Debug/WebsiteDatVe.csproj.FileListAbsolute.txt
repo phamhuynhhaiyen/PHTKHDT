@@ -77,3 +77,7 @@ C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj
 C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.CopyComplete
 C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.dll
 C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.pdb
+C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\bin\EntityFramework.dll
+C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\bin\EntityFramework.SqlServer.dll
+C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\bin\EntityFramework.xml
+C:\Users\hp\source\repos\WebsiteDatVe\WebsiteDatVe\bin\EntityFramework.SqlServer.xml

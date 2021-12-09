@@ -27,57 +27,15 @@
                     <div class="form-group">
                         <div class="place">
                             <p class="title">Điểm đi</p>
-                            <input type="text" id="txtDiemDi" value="Ho Chi Minh City" />
-                            <div class="combobox" id="cbbDiemDi">
-                                <div class="title">
-                                    Địa điểm nổi bật
-                                </div>
-                                <div class="item">
-                                    Hồ Chí Minh
-                                </div>
-                                <div class="item">
-                                    Đà Nẵng
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Đồng Nai
-                                </div>
-                            </div>
+                        <select data-select id="cbbDiemDi">
+                        </select>
+                        
                         </div>
                         <div class="place">
                             <p class="title">Điểm đến</p>
-                            <input type="text" id="txtDiemDen" value="Hà Nội" />
-                            <div class="combobox" id="cbbDiemDen">
-                                <div class="title">
-                                    Địa điểm nổi bật
-                                </div>
-                                <div class="item">
-                                    Hồ Chí Minh
-                                </div>
-                                <div class="item">
-                                    Đà Nẵng
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Hà Nội
-                                </div>
-                                <div class="item">
-                                    Đồng Nai
-                                </div>
-                            </div>
+                        <select data-select id="cbbDiemDen">
+                            
+                        </select>
                         </div>
                     </div>
 
@@ -197,3 +155,29 @@
     </div>
 </div>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            getDiaDiem();
+            $('#cbbDiemDen').change(function () {
+                //alert($('#cbbDiemDen').val())
+            })
+
+            
+        })
+
+        function getDiaDiem() {
+            $.ajax({
+                type: 'get',
+                url: '/Home/getDiaDiem',
+                success: function (data) {
+                    $.each(data.lstDiaDiem, function (k, v) {
+                        var option = `<option value="` + v.MaSanBay + `">` + v.NoiDung + `</option>`;
+                        $('#cbbDiemDi').append(option);
+                        $('#cbbDiemDen').append(option);
+                    })
+                }
+            })
+        }
+    </script>
+}

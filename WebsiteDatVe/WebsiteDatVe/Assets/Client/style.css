@@ -253,16 +253,6 @@ section{
     
 }
 
-#cbbDiemDi{
-    top: 130%;
-    left: -33px;
-    width: 112%;
-}
-#cbbDiemDen{   
-    top: 130%;
-    left: -10px;
-    width: 112%;
-}
 
 #cbbKhach, #cbbLoaiGhe{
     overflow-y: hidden;
