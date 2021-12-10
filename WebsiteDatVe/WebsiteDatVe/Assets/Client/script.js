@@ -1,13 +1,4 @@
 $(document).ready(function () {
-    ////var target = ""
-    //$("#txtDiemDi").click(function () {
-    //    $("#cbbDiemDi").toggleClass("active");
-    //    //target = '#txtDiemDi'
-    //})
-    //$("#txtDiemDen").click(function () {
-    //    $("#cbbDiemDen").toggleClass("active");
-    //    //target = '#txtDiemDen'
-    //})
 
     $("#frmKhach").click(function () {
         $("#cbbKhach").toggleClass("active");
@@ -30,6 +21,8 @@ $(document).ready(function () {
         },
 
     });
+
+    
     
 
     //window.onclick = function (e) {

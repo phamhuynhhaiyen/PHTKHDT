@@ -14,6 +14,11 @@ namespace WebsiteDatVe.Controllers
         {
             return View();
         }
+        public ActionResult Search()
+        {
+            return View();
+        }
+
         public JsonResult getDiaDiem()
         {
             try
@@ -30,6 +35,20 @@ namespace WebsiteDatVe.Controllers
             catch(Exception e)
             {
                 return Json(new { code = 500 , msg = e.Message}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult findFlight(long diemdi, long diemden, int nguoilon, int treem, int embe, DateTime ngaydi, string hangghe)
+        {
+            try
+            {
+               
+
+                return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

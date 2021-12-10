@@ -1724,6 +1724,7 @@
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.eot" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.ttf" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.woff" />
+    <Content Include="Assets\Client\search.css" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1746,6 +1747,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

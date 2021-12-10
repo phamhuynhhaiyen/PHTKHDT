@@ -13,12 +13,12 @@
         <div class="box">
             <div class="radio-group">
                 <label class="radio">
-                    <input type="radio" name="type" id="1" />
-                    <label for="1">Một chiều</label>
+                    <input type="radio" name="type" id="rdMotChieu" value="1" checked/>
+                    <label for="rdMotChieu">Một chiều</label>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="type" id="2" />
-                    <label for="2">Khứ hồi</label>
+                    <input type="radio" name="type" id="rdHaiChieu" value="2"/>
+                    <label for="rdHaiChieu">Khứ hồi</label>
                 </label>
             </div>
             <div class="detail">
@@ -27,15 +27,14 @@
                     <div class="form-group">
                         <div class="place">
                             <p class="title">Điểm đi</p>
-                        <select data-select id="cbbDiemDi">
-                        </select>
-                        
+                            <select data-select id="cbbDiemDi">
+                            </select>
+
                         </div>
                         <div class="place">
                             <p class="title">Điểm đến</p>
-                        <select data-select id="cbbDiemDen">
-                            
-                        </select>
+                            <select data-select id="cbbDiemDen">
+                            </select>
                         </div>
                     </div>
 
@@ -49,7 +48,7 @@
                         </div>
                         <div class="date">
                             <p class="title">Ngày về</p>
-                            <input id="timeCheckOut" type="text" />
+                            <input id="timeCheckOut" type="text" value="--" disabled />
                         </div>
                     </div>
                 </div>
@@ -59,11 +58,11 @@
                         <div class="passengers">
                             <p class="title">Hành khách</p>
                             <div class="content">
-                                <span>0</span>
+                                <span class="nguoilon"></span>
                                 Người lớn,
-                                <span>0</span>
+                                <span class="treem"></span>
                                 Trẻ em,
-                                <span>0</span>
+                                <span class="embe"></span>
                                 Em bé
                             </div>
 
@@ -83,9 +82,9 @@
                                     <p>>12 tuổi</p>
                                 </div>
                                 <div class="right">
-                                    <i class="fas fa-minus"></i>
-                                    <div>1</div>
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus" onclick="Minus('nguoilon')"></i>
+                                    <div class="nguoilon"></div>
+                                    <i class="fas fa-plus" onclick="Plus('nguoilon')"></i>
                                 </div>
                             </div>
                         </div>
@@ -97,9 +96,9 @@
                                     <p>>2 tuổi & <12 tuổi</p>
                                 </div>
                                 <div class="right">
-                                    <i class="fas fa-minus"></i>
-                                    <div>1</div>
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus" onclick="Minus('treem')"></i>
+                                    <div class="treem"></div>
+                                    <i class="fas fa-plus" onclick="Plus('treem')"></i>
                                 </div>
                             </div>
                         </div>
@@ -111,9 +110,9 @@
                                     <p><2 tuổi</p>
                                 </div>
                                 <div class="right">
-                                    <i class="fas fa-minus"></i>
-                                    <div>1</div>
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus" onclick="Minus('embe')"></i>
+                                    <div class="embe"></div>
+                                    <i class="fas fa-plus" onclick="Plus('embe')"></i>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +123,7 @@
                     <div class="form-group" id="frmLoaiGhe">
                         <div class="passengers">
                             <p class="title">Hạng ghế</p>
-                            <p>Thương gia</p>
+                            <p id="LoaiGhe">Phổ thông</p>
                         </div>
                         <div class="passengers">
                             <div class="arrow">
@@ -133,22 +132,22 @@
                         </div>
                     </div>
                     <div class="combobox" id="cbbLoaiGhe">
-                        <div class="item">
+                        <div class="item sheet">
                             Phổ thông
                         </div>
-                        <div class="item">
+                        <div class="item sheet">
                             Phổ thông đặc biệt
                         </div>
-                        <div class="item">
+                        <div class="item sheet">
                             Thương gia
-                        </div><div class="item">
+                        </div><div class="item sheet">
                             Hạng nhất
                         </div>
                     </div>
                 </div>
 
                 <div class="btn-container">
-                    <button class="btn-primary">TÌM CHUYẾN BAY</button>
+                    <button class="btn-primary" id="btnFind">TÌM CHUYẾN BAY</button>
                 </div>
             </div>
         </div>
@@ -159,11 +158,62 @@
     <script>
         $(document).ready(function () {
             getDiaDiem();
-            $('#cbbDiemDen').change(function () {
-                //alert($('#cbbDiemDen').val())
-            })
 
-            
+        })
+        //Xử lý số lượng hành khách
+        var nguoilon = 1;
+        var treem = 0;
+        var embe = 0;
+
+        $('.nguoilon').html(nguoilon);
+        $('.treem').html(treem);
+        $('.embe').html(embe);
+
+        function Plus(a) {
+            if (a == 'nguoilon') {
+                nguoilon = nguoilon + 1
+                $('.nguoilon').html(nguoilon)
+            }
+            if (a == 'treem') {
+                treem = treem + 1
+                $('.treem').html(treem)
+            }
+            if (a == 'embe') {
+                embe = embe + 1
+                $('.embe').html(embe)
+            }
+        }
+
+        function Minus(a) {
+            if (a == 'nguoilon') {
+                nguoilon > 0 ? nguoilon = nguoilon - 1 : nguoilon = 0
+                $('.nguoilon').html(nguoilon)
+            }
+            if (a == 'treem') {
+                treem > 0 ? treem = treem - 1 : treem = 0
+                $('.treem').html(treem)
+            }
+            if (a == 'embe') {
+                embe > 0 ? embe = embe - 1 : embe = 0
+                $('.embe').html(embe)
+            }
+        }
+
+        //Xu li chon ghe
+        $('.sheet').click(function () {
+            $("#cbbLoaiGhe").removeClass("active");
+            $('#LoaiGhe').html($(this).html())
+        })
+
+
+        //Xử lý  radio button
+        $('input:radio[name="type"]').change(function () {
+            if ($(this).val() == 2) {
+                $('#timeCheckOut').prop("disabled", false);             
+            } else {
+                $('#timeCheckOut').prop("disabled", true);
+                $('#timeCheckOut').val("--")
+            }
         })
 
         function getDiaDiem() {
@@ -176,8 +226,32 @@
                         $('#cbbDiemDi').append(option);
                         $('#cbbDiemDen').append(option);
                     })
+                    
+                    
                 }
             })
         }
+
+        //Tìm chuyến bay
+        $('#btnFind').click(function () {
+            $.ajax({
+                type: 'get',
+                url: '/Home/findFlight',
+                data: {
+                    diemdi: $('#cbbDiemDi').val(),
+                    diemden: $('#cbbDiemDen').val(),
+                    nguoilon: nguoilon,
+                    treem: treem,
+                    embe: embe,
+                    ngaydi: $('#timeCheckIn').val(),
+                    /*ngayve: $('#timeCheckOut').val(),*/
+                    hangghe: $('#LoaiGhe').html()
+                },
+                success: function (data) {
+                    window.location = '/Home/Search'
+                }
+            })
+        })
+
     </script>
 }

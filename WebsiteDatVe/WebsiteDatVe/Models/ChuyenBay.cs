@@ -22,9 +22,9 @@ namespace WebsiteDatVe.Models
 
         public long? DiemDen { get; set; }
 
-        public TimeSpan? ThoiGianDi { get; set; }
+        public DateTime? ThoiGianDi { get; set; }
 
-        public TimeSpan? ThoiGianDen { get; set; }
+        public DateTime? ThoiGianDen { get; set; }
 
         [StringLength(10)]
         public string MaMayBay { get; set; }
