@@ -1705,6 +1705,7 @@
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.eot" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.ttf" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.woff" />
+    <Content Include="Areas\Admin\Views\TrangChu\Plane.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
