@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="~/Assets/Admin/css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/Assets/Admin/images/favicon.png">
+    <!-- ajax -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- datetime picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!--dropdown-->
+    <link rel="stylesheet" href="~/Assets/Client/select/select.css" />
+    @*<script src="~/Assets/Client/select/select.js" type="module"></script>*@
     @*<style type="text/css">
         /* Chart.js */
         @keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style>*@
@@ -321,7 +328,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="/Admin/ChuyenBay/Index">
                             <i class="icon-paper menu-icon"></i>
                             <span class="menu-title">Chuyến bay</span>
                         </a>
@@ -333,19 +340,19 @@
                         </a>
                     </li>
                     @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/buttons.html">Buttons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/typography.html">Typography</a></li>
-                </ul>
-            </div>
-        </li>*@
+                            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                                <i class="icon-layout menu-icon"></i>
+                                <span class="menu-title">UI Elements</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/buttons.html">Buttons</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="~/Assets/Admin/pages/ui-features/typography.html">Typography</a></li>
+                                </ul>
+                            </div>
+                        </li>*@
                 </ul>
             </nav>
             <!-- partial -->
@@ -354,6 +361,7 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
+    @RenderSection("scripts", required: false)
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="~/Assets/Admin/vendors/js/vendor.bundle.base.js"></script>
@@ -376,9 +384,7 @@
     <script src="~/Assets/Admin/js/dashboard.js"></script>
     <script src="~/Assets/Admin/js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
-
-
-
-
+    <!-- Datetimepicker -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 </html>

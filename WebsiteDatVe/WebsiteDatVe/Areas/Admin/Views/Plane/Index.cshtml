@@ -1,0 +1,49 @@
+﻿@using WebsiteDatVe.Models;
+@model IEnumerable<MayBay>
+@{
+    ViewBag.Title = "Plane";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-table" style="background-color: #f5f7ff; width:100%">
+    <div class="card" style=" margin:24px 16px;">
+        <div class="card-body">
+            <h4 class="card-title">Quản lý máy bay</h4>
+            <p class="card-description">
+                <a href="/Admin/TrangChu/CreatePhane" class="badge badge-info">Thêm</a>
+            </p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã máy bay</th>
+                            <th>Số ghế phổ thông</th>
+                            <th>Số ghê thương gia</th>
+                            <th>Số ghế đặt biệt</th>
+                            <th>Số ghế hạng nhất</th>
+                            <th>Tên hãng bay</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaMayBay</td>
+                                <td>@item.SoGhePhoThong</td>
+                                <td>@item.SoGheThuongGia</td>
+                                <td>@item.SoGhePhoThongDacBiet</td>
+                                <td>@item.SoGheHangNhat</td>
+                                <td>@item.HangBay.TenHangBay</td>
+                                <td>
+                                    <a href="#" class="badge badge-warning">Sửa</a>
+                                    <button class="badge badge-danger" style="border:none">Xóa</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
