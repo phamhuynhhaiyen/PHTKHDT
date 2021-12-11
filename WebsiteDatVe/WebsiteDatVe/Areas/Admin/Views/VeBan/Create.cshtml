@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-body">
+    <h4 class="card-title">Thêm vé mới</h4>
+    <p class="card-description">
+        Bạn hãy điền thông tin vào form sau
+    </p>
+    <form class="forms-sample">
+        <div class="form-group row">
+            <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã chuyến bay</label>
+            <div class="col-sm-9">
+                <select data-select class="form-control" id="MaChuyenBay">
+                </select>
+            </div>
+        </div>
+
+
+        <div type="submit" class="btn btn-primary mr-2" onclick="Add()">Submit</div>
+        <div class="btn btn-light" onclick="BackToChuyenBay()">Cancel</div>
+    </form>
+</div>
+<!-- Information Modal HTML -->
+<div id="infoDialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="titleInfo"></p>
+                    <p class="text-info"><small id="contentInfo"></small></p>
+                </div>
+                <div class="modal-footer">
+                    <div type="submit" id="confirmOk" class="btn btn-info">Oke</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getMaChuyenBay();
+    })
+
+    function showInfo(title, content) {
+        var onConfirm = function () {
+            modal.modal("hide");
+            return true;
+        };
+
+        var modal = $("#infoDialog");
+        modal.modal("show");
+        $("#titleInfo").html(title);
+        $("#contentInfo").html(content);
+        $("#confirmOk").unbind().one('click', onConfirm);
+    }
+
+    function Add() {
+        var veBan = {
+            MaChuyenBay: $('#MaChuyenBay').val(),
+        };
+        $.ajax({
+            url: "/VeBan/Add",
+            data: JSON.stringify(veBan),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.log == "OK") {
+                    window.location.replace("@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port/Admin/VeBan/Index");
+                } else {
+                    showInfo("Có vẻ như chuyến bay này đã được tạo vé rồi",
+                        "Bạn hãy tạo vé cho chuyến bay khác nhé"
+                    );
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function getMaChuyenBay() {
+        $.ajax({
+            type: 'get',
+            url: '/VeBan/getMaChuyenBay',
+            success: function (data) {
+                $.each(data.listChuyenBay, function (k, v) {
+                    var option = `<option value="` + v.MaChuyenBay + `">` + v.NoiDung + `</option>`;
+                    $('#MaChuyenBay').append(option);
+                })
+            },
+            error: function (message) {
+                alert(message.contentType);
+            }
+        })
+    }
+
+    function BackToChuyenBay() {
+        window.location.replace("@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port/Admin/VeBan/Index");
+    }
+</script>
+
