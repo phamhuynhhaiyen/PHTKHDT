@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
@@ -6,9 +7,9 @@
 <div class="card-table" style="background-color: #f5f7ff; width:100%">
     <div class="card" style=" margin:24px 16px;">
         <div class="card-body">
-            <h4 class="card-title">Quản lý vé bán</h4>
+            <h4 class="card-title">Quản lý vé lưu</h4>
             <p class="card-description">
-                <a href="/Admin/VeBan/Create" class="badge badge-info">Thêm</a>
+                @*<a href="/Admin/VeBan/Create" class="badge badge-info">Thêm</a>*@
             </p>
             <div class="table-responsive">
                 <table class="table">
@@ -18,7 +19,7 @@
                             <th>Mã chuyến bay</th>
                             <th>Hạng vé</th>
                             <th>Số ghế</th>
-                            @*<th>[Action]</th>*@
+                            <th>Tên khách hàng</th>
                         </tr>
                     </thead>
                     <tbody class="tbody">
@@ -29,7 +30,7 @@
     </div>
 </div>
 <!-- Delete Modal HTML -->
-<div id="deleteChuyenBayModal" class="modal fade">
+<!--<div id="deleteChuyenBayModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form>
@@ -48,7 +49,7 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->
 
 @section scripts{
     <script>
@@ -58,7 +59,7 @@
 
         function loadData() {
             $.ajax({
-                url: "/VeBan/List",
+                url: "/VeLuu/List",
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -74,6 +75,7 @@
                             + '<a href="#" class="badge badge-danger" style="border:none"'
                             + ' onclick="Delete(' + item.MaChuyenBay + ')">Delete</a></td>';*@
                         html += '<td>' + item.SoGhe + '</td>';
+                        html += '<td>' + item.TenKhachHang + '</td>';
 
                         html += '</tr>';
                     });
@@ -86,4 +88,6 @@
         }
     </script>
 }
+
+
 

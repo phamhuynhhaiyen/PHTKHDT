@@ -33,7 +33,8 @@ namespace WebsiteDatVe.Areas.Admin.Controllers
                         {
                             MaVe = v.MaVe.ToString(),
                             MaChuyenBay = v.MaChuyenBay,
-                            HangVe = v.HangVe.ToString()
+                            HangVe = v.HangVe.ToString(),
+                            SoGhe = v.SoGhe
                         }).ToList();
 
             return Json(data, JsonRequestBehavior.AllowGet);

@@ -138,6 +138,9 @@
     <Compile Include="Areas\Admin\Controllers\PlaneController.cs" />
     <Compile Include="Areas\Admin\Controllers\TrangChuController.cs" />
     <Compile Include="Areas\Admin\Controllers\VeBanController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeDatController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeHuyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeLuuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1736,6 +1739,9 @@
     <Content Include="Areas\Admin\Views\ChuyenBay\getById.cshtml" />
     <Content Include="Areas\Admin\Views\VeBan\Index.cshtml" />
     <Content Include="Areas\Admin\Views\VeBan\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\VeLuu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VeDat\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VeHuy\Index.cshtml" />
     <None Include="Dockerfile" />
     <None Include=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>
