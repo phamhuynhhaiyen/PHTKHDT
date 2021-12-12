@@ -181,5 +181,73 @@ namespace WebsiteDatVe.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(new { log = "OK" }, JsonRequestBehavior.AllowGet);
         }
+
+
+        public JsonResult SearchByMaChuyenBay(long? searchKey)
+        {
+            var resultSearch = db.Ves.Where(v => (v.MaChuyenBay == searchKey)
+            && v.TinhTrang.Equals("sell") || (searchKey == null) && v.TinhTrang.Equals("sell")).ToList();
+            var listVe = (from v in resultSearch
+                          select new
+                          {
+                              MaVe = v.MaVe.ToString(),
+                              MaChuyenBay = v.MaChuyenBay,
+                              HangVe = v.HangVe.ToString(),
+                              SoGhe = v.SoGhe
+                          }).ToList();
+
+            return Json(listVe, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SearchByHangVe(string searchKey)
+        {
+            var resultSearch = db.Ves.Where(v => (v.HangVe == searchKey)
+            && v.TinhTrang.Equals("sell") || (searchKey == null)
+                && v.TinhTrang.Equals("sell")).ToList();
+            var listVe = (from v in resultSearch
+                          select new
+                          {
+                              MaVe = v.MaVe.ToString(),
+                              MaChuyenBay = v.MaChuyenBay,
+                              HangVe = v.HangVe.ToString(),
+                              SoGhe = v.SoGhe
+                          }).ToList();
+
+            return Json(listVe, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SearchByMaVe(string searchKey)
+        {
+            var resultSearch = db.Ves.Where(v => (v.MaVe == searchKey)
+            && v.TinhTrang.Equals("sell") || (searchKey == null)
+                && v.TinhTrang.Equals("sell")).ToList();
+            var listVe = (from v in resultSearch
+                          select new
+                          {
+                              MaVe = v.MaVe.ToString(),
+                              MaChuyenBay = v.MaChuyenBay,
+                              HangVe = v.HangVe.ToString(),
+                              SoGhe = v.SoGhe
+                          }).ToList();
+
+            return Json(listVe, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SearchBySoGhe(string searchKey)
+        {
+            var resultSearch = db.Ves.Where(v => (v.SoGhe == searchKey)
+            && v.TinhTrang.Equals("sell") || (searchKey == null)
+                && v.TinhTrang.Equals("sell")).ToList();
+            var listVe = (from v in resultSearch
+                          select new
+                          {
+                              MaVe = v.MaVe.ToString(),
+                              MaChuyenBay = v.MaChuyenBay,
+                              HangVe = v.HangVe.ToString(),
+                              SoGhe = v.SoGhe
+                          }).ToList();
+
+            return Json(listVe, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -10,6 +10,21 @@
             <p class="card-description">
                 <a href="/Admin/VeBan/Create" class="badge badge-info">Thêm</a>
             </p>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tuỳ chọn tìm kiếm
+                    </button>
+                    <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="#" onclick="searchByMaVe()">Mã vé</a>
+                        <a class="dropdown-item" href="#" onclick="searchByMaChuyenBay()">Mã chuyến bay</a>
+                        <a class="dropdown-item" href="#" onclick="searchByHangVe()">Hạng vé</a>
+                        <a class="dropdown-item" href="#" onclick="searchBySoGhe()">Số ghế</a>
+                    </div>
+                </div>
+                <input id="searchKey" type="text" class="form-control" aria-label="Text input with dropdown button">
+            </div>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -81,6 +96,112 @@
                 },
                 error: function (errormessage) {
                     alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function searchByMaChuyenBay() {
+            var searchKey = $('#searchKey').val();
+            //Delete dữ liệu hiện tại và tiến hành search lại dữ liệu
+            $('.tbody').html("");
+            $.ajax({
+                url: "/VeBan/SearchByMaChuyenBay?searchKey=" + searchKey,
+                type: "POST",
+                contentType: "html",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.MaVe + '</td>';
+                        html += '<td>' + item.MaChuyenBay + '</td>';
+                        html += '<td>' + item.HangVe + '</td>';
+                        html += '<td>' + item.SoGhe + '</td>';
+
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function searchByHangVe() {
+            var searchKey = $('#searchKey').val();
+            $('.tbody').html("");
+            $.ajax({
+                url: "/VeBan/SearchByHangVe",
+                data: { 'searchKey': searchKey },
+                type: "post",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.MaVe + '</td>';
+                        html += '<td>' + item.MaChuyenBay + '</td>';
+                        html += '<td>' + item.HangVe + '</td>';
+                        html += '<td>' + item.SoGhe + '</td>';
+
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (message) {
+                    alert(message.contentType);
+                }
+            });
+        }
+
+
+        function searchByMaVe() {
+            var searchKey = $('#searchKey').val();
+            $('.tbody').html("");
+            $.ajax({
+                url: "/VeBan/SearchByMaVe",
+                data: { 'searchKey': searchKey },
+                type: "post",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.MaVe + '</td>';
+                        html += '<td>' + item.MaChuyenBay + '</td>';
+                        html += '<td>' + item.HangVe + '</td>';
+                        html += '<td>' + item.SoGhe + '</td>';
+
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (message) {
+                    alert(message.contentType);
+                }
+            });
+        }
+
+        function searchBySoGhe() {
+            var searchKey = $('#searchKey').val();
+            $('.tbody').html("");
+            $.ajax({
+                url: "/VeBan/SearchBySoGhe",
+                data: { 'searchKey': searchKey },
+                type: "post",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.MaVe + '</td>';
+                        html += '<td>' + item.MaChuyenBay + '</td>';
+                        html += '<td>' + item.HangVe + '</td>';
+                        html += '<td>' + item.SoGhe + '</td>';
+
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (message) {
+                    alert(message.contentType);
                 }
             });
         }
