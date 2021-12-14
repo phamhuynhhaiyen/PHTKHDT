@@ -166,4 +166,7 @@ D:\DoAnCuoiKy\PHTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.Co
 D:\DoAnCuoiKy\PHTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.CopyComplete
 D:\DoAnCuoiKy\PHTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.dll
 D:\DoAnCuoiKy\PHTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.pdb
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

@@ -1,41 +1,30 @@
 ﻿@using WebsiteDatVe.Models;
-@model IEnumerable<MayBay>
+@model IEnumerable<HangBay>
 @{
-    ViewBag.Title = "Plane";
+    ViewBag.Title = "Airline";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<<<<<<< Updated upstream
-
-=======
 @{
     int iDem = 0;
-    int iSLDanhMucTrenTrang = 5;
+    int iSLDanhMucTrenTrang = 4;
     int iTrang = 1;
 }
->>>>>>> Stashed changes
 <div class="card-table" style="background-color: #f5f7ff; width:100%">
     <div class="card" style=" margin:24px 16px;">
         <div class="card-body">
-            <h4 class="card-title">Quản lý máy bay</h4>
+            <h4 class="card-title">Quản lý hãng bay</h4>
             <p class="card-description">
-<<<<<<< Updated upstream
-                <a href="/Admin/TrangChu/CreatePhane" class="badge badge-info">Thêm</a>
-=======
-                <a href="/Admin/TrangChu/CreatePhane" class="badge badge-info">
+                <a href="/Admin/TrangChu/CreateAirline" class="badge badge-info">
                     <i class="fas fa-plus" style="margin-right:2px"></i>
-                Thêm
+                    Thêm
                 </a>
->>>>>>> Stashed changes
             </p>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Mã máy bay</th>
-                            <th>Số ghế phổ thông</th>
-                            <th>Số ghê thương gia</th>
-                            <th>Số ghế đặt biệt</th>
-                            <th>Số ghế hạng nhất</th>
+                            <th>Mã hãng bay</th>
+                            <th>Logo</th>
                             <th>Tên hãng bay</th>
                             <th></th>
                         </tr>
@@ -43,48 +32,31 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-<<<<<<< Updated upstream
-                            <tr>
-=======
                             if (iDem % iSLDanhMucTrenTrang == 0 && iDem != 0)
                             {
                                 iTrang++;
                             }
-                            <tr id="@item.MaMayBay" class="@Url.Content("SoTrangChua SoTrang" + iTrang.ToString())">
->>>>>>> Stashed changes
-                                <td>@item.MaMayBay</td>
-                                <td>@item.SoGhePhoThong</td>
-                                <td>@item.SoGheThuongGia</td>
-                                <td>@item.SoGhePhoThongDacBiet</td>
-                                <td>@item.SoGheHangNhat</td>
-                                <td>@item.HangBay.TenHangBay</td>
+                            <tr id="@item.MaHangBay" class="@Url.Content("SoTrangChua SoTrang" + iTrang.ToString())">
+                                <td>@item.MaHangBay</td>
+                                <td><img src="@item.Logo" width="150" height="150" alt="" /></td>
+                                <td>@item.TenHangBay</td>
                                 <td>
-<<<<<<< Updated upstream
-                                    <a href="#" class="badge badge-warning">Sửa</a>
-                                    <button class="badge badge-danger" style="border:none">Xóa</button>
-                                </td>
-                            </tr>
-=======
-                                    <a href="/Admin/TrangChu/EditPlane/@item.MaMayBay" class="badge badge-warning"style="margin-right:2px">
+                                    <a href="/Admin/TrangChu/EditAirline/@item.MaHangBay" class="badge badge-warning" style="margin-right:2px">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <button name="btnTuchoi" class="badge badge-danger" style="border:none">
+                                    <button name="btnXoaHangBay" class="badge badge-danger" style="border:none" >
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
                             iDem++;
->>>>>>> Stashed changes
                         }
+
+
                     </tbody>
                 </table>
             </div>
         </div>
-<<<<<<< Updated upstream
-    </div>
-</div>
-
-=======
         <div class="row" style="margin:1rem;">
             @for (int i = 1; i <= iTrang; i++)
             {
@@ -92,9 +64,9 @@
             }
         </div>
     </div>
-</div>
 
-<div class="modal" id="modalDuyet">
+</div>
+<div class="modal" id="modalThongBao">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -107,14 +79,18 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnDongY">Đồng ý</button>
+                <button type="button" class="btn btn-primary" id="btnDongYXoa">Đồng ý</button>
                 <button type="button" class="btn btn-secondary" onclick="modalClose()">Đóng</button>
             </div>
         </div>
     </div>
 </div>
-
 <style>
+    .table td img {
+        width: 60px;
+        height: 60px;
+    }
+
     .SoTrangChua {
         display: none;
     }
@@ -142,38 +118,29 @@
         color: #fff
     }
 </style>
-
-@section Jsfooter{
+@section jsFooter{
     <script>
         var trangthai = 2;
-        var ma;
-        $(document).on('click', "button[name='btnDuyet']", function () {
-            $('#btnMess').empty();
-            $('#btnMess').append('<p>Bạn chắc chắn xóa thông tin máy bay?</p>');
-            $('#modalDuyet').show();
-            trangthai = 0;
-            ma = $(this).closest('tr').attr('id');
 
-        });
 
         function modalClose() {
-            $('#modalDuyet').hide();
+            $('#modalThongBao').hide();
 
         }
-        $(document).on('click', "button[name='btnTuchoi']", function () {
+        $(document).on('click', "button[name='btnXoaHangBay']", function () {
+            //alert('ok')
             $('#btnMess').empty();
-            $('#btnMess').append('<p>Bạn chắc chắn xóa loại sản phẩm</p>');
-            $('#modalDuyet').show();
-            trangthai = 1;
+            $('#btnMess').append('<p>Bạn chắc chắn xóa hãng bay?</p>');
+            $('#modalThongBao').show();
             ma = $(this).closest('tr').attr('id');
         });
-        $('#btnDongY').click(function () {
+        $('#btnDongYXoa').click(function () {
+           // alert('ok')
             $.ajax({
                 type: 'post',
-                url: '/Admin/TrangChu/DeletePlane',
+                url: '/Admin/TrangChu/DeleteAirline',
                 data: {
-
-                    mamaybay: ma,
+                    mahangbay: ma,
                 },
                 success: function (data) {
                     if (data.code == 200) {
@@ -190,4 +157,3 @@
         });
     </script>
 }
->>>>>>> Stashed changes

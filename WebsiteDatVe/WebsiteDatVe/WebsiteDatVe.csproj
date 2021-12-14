@@ -1706,6 +1706,14 @@
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.ttf" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.woff" />
     <Content Include="Areas\Admin\Views\TrangChu\Plane.cshtml" />
+<<<<<<< Updated upstream
+=======
+    <Content Include="Areas\Admin\Views\TrangChu\Airline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\CreateAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\CreatePhane.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\EditAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\EditPlane.cshtml" />
+>>>>>>> Stashed changes
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1733,7 +1741,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\NguoiDung\" />
+<<<<<<< Updated upstream
     <Folder Include="Models\" />
+=======
+    <Folder Include="Images\" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
