@@ -1,3 +1,4 @@
+﻿
 $(document).ready(function () {
 
     $("#frmKhach").click(function () {
@@ -8,7 +9,6 @@ $(document).ready(function () {
     })
 
     //Xu li chon ngay
-
     flatpickr("#timeCheckIn", {
         minDate: "today",
 /*        dateFormat: "d-m-Y",*/
@@ -22,8 +22,56 @@ $(document).ready(function () {
 
     });
 
-    
-    
+    $('#btnLogin').click(function () {
+        $('.sign-in').addClass('show')
+    })
+
+    $('#btnclose').click(function () {
+        $('.sign-in').removeClass('show')
+    })
+
+    $('#btnSaved').click(function () {
+        if ($('#session').val() == 0) {
+            $('.sign-in').addClass('show')
+        } else {
+            window.location = '/User/Saved'
+        }
+    })
+
+    $('#btnHistory').click(function () {
+        if ($('#session').val() == 0) {
+            $('.sign-in').addClass('show')
+        } else {
+            window.location = '/User/MyBooking'
+        }
+    })
+
+    //Login
+    $('#btnSignin').click(function () {
+        if ($('#txtEmail').val() == "" || $('#txtPwd').val() == "") {
+            $("#txtMsg").empty();
+            $("#txtMsg").append("Vui lòng nhập đầy đủ thông tin!");
+        } else {
+            $.ajax({
+                type: 'get',
+                url: '/User/CheckAccount',
+                data: {
+                    email: $('#txtEmail').val(),
+                    password: $('#txtPwd').val()
+                },
+                success: function (data) {
+                    if (data.thanhcong == false) {
+                        $("#txtMsg").empty();
+                        $("#txtMsg").append("Email hoặc mật khẩu không chính xác!");
+                    } else {
+                        alert("Đăng nhập thành công!");
+                        location.reload();
+                    }
+                }
+            })
+        }
+    })
+
 
     //window.onclick = function (e) {
     //    if (!e.target.matches(".form-group")) {

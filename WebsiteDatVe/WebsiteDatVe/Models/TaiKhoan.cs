@@ -9,6 +9,12 @@ namespace WebsiteDatVe.Models
     [Table("TaiKhoan")]
     public partial class TaiKhoan
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TaiKhoan()
+        {
+            Ves = new HashSet<Ve>();
+        }
+
         [Key]
         public long MaTaiKhoan { get; set; }
 
@@ -26,5 +32,8 @@ namespace WebsiteDatVe.Models
 
         [StringLength(10)]
         public string Quyen { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ve> Ves { get; set; }
     }
 }

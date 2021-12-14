@@ -53,6 +53,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.13\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -132,7 +135,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\TrangChuController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -145,6 +150,8 @@
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TaiKhoan.cs" />
     <Compile Include="Models\Ve.cs" />
+    <Compile Include="MoMoSecurity.cs" />
+    <Compile Include="PaymentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1391,14 +1398,19 @@
     <Content Include="Assets\Admin\vendors\typeahead.js\typeahead.bundle.min.js" />
     <Content Include="Assets\Admin\vendors\x-editable\bootstrap-editable.css" />
     <Content Include="Assets\Admin\vendors\x-editable\bootstrap-editable.min.js" />
+    <Content Include="Assets\Client\booking.css" />
+    <Content Include="Assets\Client\login.css" />
     <Content Include="Assets\Client\script.js" />
     <Content Include="Assets\Client\select\select.css" />
     <Content Include="Assets\Client\select\select.js" />
     <Content Include="Assets\Client\style.css" />
     <Content Include="Assets\images\banner-flight.jpg" />
+    <Content Include="Assets\images\Logo-Vietjet.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="lib\log4net.dll" />
+    <Content Include="lib\Newtonsoft.Json.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -1725,6 +1737,7 @@
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.ttf" />
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.woff" />
     <Content Include="Assets\Client\search.css" />
+    <Content Include="log4net.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1748,6 +1761,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Booking\Checkout.cshtml" />
+    <Content Include="Views\User\Saved.cshtml" />
+    <Content Include="Views\User\MyBooking.cshtml" />
+    <Content Include="Views\Booking\Ticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

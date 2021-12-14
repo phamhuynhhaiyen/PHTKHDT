@@ -33,6 +33,10 @@ namespace WebsiteDatVe.Models
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<HangBay>()
+                .Property(e => e.Logo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<HangBay>()
                 .HasMany(e => e.MayBays)
                 .WithOptional(e => e.HangBay)
                 .WillCascadeOnDelete();
@@ -46,9 +50,8 @@ namespace WebsiteDatVe.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<KhachHang>()
-                .HasMany(e => e.Ves)
-                .WithOptional(e => e.KhachHang)
-                .WillCascadeOnDelete();
+                .Property(e => e.MaVe)
+                .IsUnicode(false);
 
             modelBuilder.Entity<MayBay>()
                 .Property(e => e.MaMayBay)
@@ -75,13 +78,19 @@ namespace WebsiteDatVe.Models
                 .Property(e => e.Quyen)
                 .IsFixedLength();
 
+            modelBuilder.Entity<TaiKhoan>()
+                .HasMany(e => e.Ves)
+                .WithOptional(e => e.TaiKhoan)
+                .WillCascadeOnDelete();
+
             modelBuilder.Entity<Ve>()
                 .Property(e => e.MaVe)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Ve>()
-                .Property(e => e.SoGhe)
-                .IsUnicode(false);
+                .HasMany(e => e.KhachHangs)
+                .WithOptional(e => e.Ve)
+                .WillCascadeOnDelete();
         }
     }
 }

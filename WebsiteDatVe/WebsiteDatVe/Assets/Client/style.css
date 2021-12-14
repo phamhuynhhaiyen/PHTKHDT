@@ -46,6 +46,17 @@ section{
     font-weight: 700;
 }
 
+.btn-info {
+    font-size: 1.6rem;
+    color: #fff !important;
+    width: 40px;
+    height: 40px;
+    background-color: var(--blue);
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 700;
+}
+
 .header{
     display: flex;
     align-items: center;
@@ -74,15 +85,17 @@ section{
     font-size:3rem;
 }
 
+
 .header .menu{
     display: flex;
     align-items: center;
 }
 
-.header .menu .item:not(:last-child){
+.header .menu .item{
     margin-right: 2rem;
     color: var(--main-color);
     font-weight: 500;
+    cursor:pointer;
 }
 
 .header .menu .item:hover{
@@ -193,6 +206,8 @@ section{
     color: var(--main-color);
     width: 100%;
 }
+
+
 
 .search .box .detail .form-group .place:first-child{
     border-right: 1px solid #ccc;
@@ -328,7 +343,14 @@ section{
  
 input:disabled{
     background:#fff;
+    cursor:not-allowed;
 }
+
+.sub-title{
+    margin-bottom:2rem;
+}
+
+
 
 @media screen and (max-width: 1240px) {
     .header{
@@ -339,3 +361,4 @@ input:disabled{
         padding: 2rem;
     }
 }
+

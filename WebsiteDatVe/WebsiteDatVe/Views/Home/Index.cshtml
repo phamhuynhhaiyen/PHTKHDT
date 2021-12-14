@@ -186,7 +186,7 @@
 
         function Minus(a) {
             if (a == 'nguoilon') {
-                nguoilon > 0 ? nguoilon = nguoilon - 1 : nguoilon = 0
+                nguoilon > 1 ? nguoilon = nguoilon - 1 : nguoilon = 1
                 $('.nguoilon').html(nguoilon)
             }
             if (a == 'treem') {
@@ -234,23 +234,7 @@
 
         //Tìm chuyến bay
         $('#btnFind').click(function () {
-            $.ajax({
-                type: 'get',
-                url: '/Home/findFlight',
-                data: {
-                    diemdi: $('#cbbDiemDi').val(),
-                    diemden: $('#cbbDiemDen').val(),
-                    nguoilon: nguoilon,
-                    treem: treem,
-                    embe: embe,
-                    ngaydi: $('#timeCheckIn').val(),
-                    /*ngayve: $('#timeCheckOut').val(),*/
-                    hangghe: $('#LoaiGhe').html()
-                },
-                success: function (data) {
-                    window.location = '/Home/Search'
-                }
-            })
+            window.location = '/Home/Search/?diemdi=' + $('#cbbDiemDi').val() + '&diemden=' + $('#cbbDiemDen').val() + '&nguoilon=' + nguoilon + '&treem=' + treem + '&embe=' + embe + '&ngaydi=' + $('#timeCheckIn').val() + '&hangghe=' + $('#LoaiGhe').html();
         })
 
     </script>

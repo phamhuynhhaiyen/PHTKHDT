@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight</title>
-    <!-- css -->
+    <!-- style -->
     <link rel="stylesheet" href="~/Assets/Client/style.css">
     <link rel="stylesheet" href="~/Assets/Client/search.css">
+    <link rel="stylesheet" href="~/Assets/Client/login.css">
+    <link rel="stylesheet" href="~/Assets/Client/booking.css">
     <!-- font-awsome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- google font -->
@@ -29,15 +31,28 @@
         <div class="menu">
             <a href="/Home/Index" class="item">Trang chủ</a>
             @*<a href="#" class="item">Khuyến mãi</a>*@
-            <a href="#" class="item">Đã lưu</a>
-            <a href="#" class="item">Lịch sử đặt vé</a>
-            <button class="item btn-primary">Đăng nhập</button>
+            <a class="item" id="btnSaved">Đã lưu</a>
+            <a class="item" id="btnHistory">Lịch sử đặt vé</a>
+
+            @if (Session["TaiKhoan"] != null)
+            {
+                //WebsiteDatVe.Models.TaiKhoan taikhoan = (WebsiteDatVe.Models.TaiKhoan)Session["TaiKhoan"];
+                <button class="btn-info"><i class="fas fa-user"></i></button>
+                <input hidden id="session" value="1" />
+            }
+            else
+            {
+                <button class="btn-primary" id="btnLogin">Đăng nhập</button>
+                <input hidden id="session" value="0" />
+            }
         </div>
     </header>
 
     <div class="main">
         @RenderBody()
     </div>
+
+    @Html.Action("Login", "User")
 
     @RenderSection("scripts", required: false)
     <!-- script -->

@@ -21,6 +21,9 @@ namespace WebsiteDatVe.Models
         [StringLength(50)]
         public string TenHangBay { get; set; }
 
+        [Column(TypeName = "text")]
+        public string Logo { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MayBay> MayBays { get; set; }
     }

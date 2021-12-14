@@ -156,7 +156,6 @@ E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\System.Web.Razor.xml
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\System.Web.WebPages.xml
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\System.Web.WebPages.Deployment.xml
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\System.Web.WebPages.Razor.xml
-E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\Newtonsoft.Json.xml
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\Antlr3.Runtime.pdb
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.AssemblyReference.cache
@@ -164,3 +163,5 @@ E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.CoreCompileIn
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.csproj.CopyComplete
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.dll
 E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\obj\Debug\WebsiteDatVe.pdb
+E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\log4net.dll
+E:\PTTKHDT\WebsiteDatVe\WebsiteDatVe\bin\log4net.xml

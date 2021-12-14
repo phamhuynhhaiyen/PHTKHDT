@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,15 +10,29 @@ namespace WebsiteDatVe.Controllers
 {
     public class HomeController : Controller
     {
-        public DatVeDB db = new DatVeDB();
+        private DatVeDB db = new DatVeDB();
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult Search()
+        public ActionResult Search(long diemdi, long diemden, int nguoilon, int treem, int embe, DateTime ngaydi, string hangghe)
         {
-            return View();
+            ViewBag.DiemDi = db.SanBays.Where(x => x.MaSanBay.Equals(diemdi)).Select(x => x.TenSanBay).SingleOrDefault();
+            ViewBag.DiemDen = db.SanBays.Where(x => x.MaSanBay.Equals(diemden)).Select(x => x.TenSanBay).SingleOrDefault();
+            ViewBag.NgayDi = ngaydi.ToString("dd/M/yyyy");
+            ViewBag.HangGhe = hangghe;
+            ViewBag.SoLuong = nguoilon + treem + embe;
+
+            //search
+            List<ChuyenBay> flights = (from c
+                          in db.ChuyenBays
+                           where c.DiemDi == diemdi && c.DiemDen == diemden
+                           && EntityFunctions.TruncateTime(c.ThoiGianDi) == EntityFunctions.TruncateTime(ngaydi)
+                           select c).ToList();
+            //Kiểm tra vé trống
+            return View(flights);
         }
+
 
         public JsonResult getDiaDiem()
         {
@@ -38,18 +53,6 @@ namespace WebsiteDatVe.Controllers
             }
         }
 
-        public JsonResult findFlight(long diemdi, long diemden, int nguoilon, int treem, int embe, DateTime ngaydi, string hangghe)
-        {
-            try
-            {
-               
-
-                return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                return Json(new { code = 500, msg = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        
     }
 }

@@ -9,6 +9,12 @@ namespace WebsiteDatVe.Models
     [Table("Ve")]
     public partial class Ve
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Ve()
+        {
+            KhachHangs = new HashSet<KhachHang>();
+        }
+
         [Key]
         [StringLength(50)]
         public string MaVe { get; set; }
@@ -18,18 +24,22 @@ namespace WebsiteDatVe.Models
         [StringLength(50)]
         public string HangVe { get; set; }
 
-        [StringLength(4)]
-        public string SoGhe { get; set; }
+        public int? SoLuongGhe { get; set; }
 
-        public long? MaKhachHang { get; set; }
+        public long? MaTaiKhoan { get; set; }
 
         [StringLength(50)]
         public string TinhTrang { get; set; }
 
         public DateTime? NgayDat { get; set; }
 
+        public double? TongTien { get; set; }
+
         public virtual ChuyenBay ChuyenBay { get; set; }
 
-        public virtual KhachHang KhachHang { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KhachHang> KhachHangs { get; set; }
+
+        public virtual TaiKhoan TaiKhoan { get; set; }
     }
 }

@@ -18,6 +18,22 @@ namespace WebsiteDatVe
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Search",
+                url: "{controller}/{action}/{diemden}/{diemdi}/{nguoilon}/{treem}/{embe}/{ngaydi}/{hangghe}",
+                defaults: new { 
+                    controller = "Home", 
+                    action = "Search", 
+                    diemden = UrlParameter.Optional,
+                    diemdi = UrlParameter.Optional,
+                    nguoilon = UrlParameter.Optional,
+                    treem = UrlParameter.Optional,
+                    embe = UrlParameter.Optional,
+                    ngaydi = UrlParameter.Optional,
+                    hangghe = UrlParameter.Optional
+                }
+            );
         }
     }
 }
