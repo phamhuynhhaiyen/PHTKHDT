@@ -23,12 +23,7 @@ namespace WebsiteDatVe.Controllers
             try
             {
                 Boolean thanhcong = false;
-                var user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select new { 
-                u.Email,
-                u.HoTen,
-                u.Quyen,
-                u.SDT
-                });         
+                TaiKhoan user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select u).FirstOrDefault();         
                 if(user != null)
                 {
                     thanhcong = true;
@@ -51,7 +46,9 @@ namespace WebsiteDatVe.Controllers
         //Lịch sử đặt vé
         public ActionResult MyBooking()
         {
-            return View();
+            TaiKhoan taikhoan = (TaiKhoan)Session["TaiKhoan"];
+            List<Ve> lstVe = (from v in db.Ves where v.MaTaiKhoan == taikhoan.MaTaiKhoan orderby v.NgayDat descending select v).ToList();
+            return View(lstVe);
         }
     }
 }

@@ -134,7 +134,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChuyenBayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HangBayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MayBayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanBayController.cs" />
     <Compile Include="Areas\Admin\Controllers\TrangChuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeBanController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeHuyController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -146,11 +152,13 @@
     <Compile Include="Models\HangBay.cs" />
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\MayBay.cs" />
+    <Compile Include="Models\NguoiDatVe.cs" />
     <Compile Include="Models\SanBay.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TaiKhoan.cs" />
     <Compile Include="Models\ThongTinDatVe.cs" />
     <Compile Include="Models\Ve.cs" />
+    <Compile Include="Models\VeDaLuu.cs" />
     <Compile Include="MoMoSecurity.cs" />
     <Compile Include="PaymentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1415,9 +1423,6 @@
     <Content Include="lib\Newtonsoft.Json.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\TrangChu\Index.cshtml" />
     <Content Include="Assets\Admin\css\maps\vertical-layout-light\style.css.map" />
     <Content Include="Assets\Admin\fonts\Manrope\Manrope-Bold.eot" />
     <Content Include="Assets\Admin\fonts\Manrope\Manrope-Bold.ttf" />
@@ -1740,6 +1745,30 @@
     <Content Include="Assets\Admin\vendors\ti-icons\fonts\themify.woff" />
     <Content Include="Assets\Client\search.css" />
     <Content Include="log4net.config" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\getById.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HangBay\CreateAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\HangBay\EditAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\HangBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MayBay\CreatePhane.cshtml" />
+    <Content Include="Areas\Admin\Views\MayBay\EditPlane.cshtml" />
+    <Content Include="Areas\Admin\Views\MayBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\DeleteSanbay.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\EditSanBay.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\ThemSanBay.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\Airline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\CreateAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\CreatePhane.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\EditAirline.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\EditPlane.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChu\Plane.cshtml" />
+    <Content Include="Areas\Admin\Views\VeBan\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VeHuy\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1768,13 +1797,11 @@
     <Content Include="Views\User\Saved.cshtml" />
     <Content Include="Views\User\MyBooking.cshtml" />
     <Content Include="Views\Booking\Ticket.cshtml" />
-    <Content Include="Views\Booking\ThanhToanMomo.cshtml" />
     <Content Include="Views\Booking\returnUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\NguoiDung\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

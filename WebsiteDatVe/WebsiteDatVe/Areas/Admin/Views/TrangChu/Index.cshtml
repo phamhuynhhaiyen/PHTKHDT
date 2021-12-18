@@ -3,7 +3,11 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -55,18 +59,18 @@
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="card card-tale">
                             <div class="card-body">
-                                <p class="mb-4">Today’s Bookings</p>
-                                <p class="fs-30 mb-2">4006</p>
-                                <p>10.00% (30 days)</p>
+                                <p class="mb-4"><i style="margin-right:10px" class="fas fa-plane-slash"></i>Số lượng hãng bay</p>
+                                <p class="fs-30 mb-2">@ViewBag.tonghangbay</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="card card-dark-blue">
                             <div class="card-body">
-                                <p class="mb-4">Total Bookings</p>
-                                <p class="fs-30 mb-2">61344</p>
-                                <p>22.00% (30 days)</p>
+                                <p class="mb-4"><i style="margin-right:10px" class="fas fa-fighter-jet"></i>Số lượng chuyến bay</p>
+                                <p class="fs-30 mb-2">@ViewBag.tongchuyenbay</p>
+
                             </div>
                         </div>
                     </div>
@@ -75,18 +79,18 @@
                     <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                         <div class="card card-light-blue">
                             <div class="card-body">
-                                <p class="mb-4">Number of Meetings</p>
-                                <p class="fs-30 mb-2">34040</p>
-                                <p>2.00% (30 days)</p>
+                                <p class="mb-4"><i style="margin-right:10px" class="fas fa-plane-departure"></i>Số lượng sân bay</p>
+                                <p class="fs-30 mb-2"> @ViewBag.tongsanbay</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 stretch-card transparent">
                         <div class="card card-light-danger">
                             <div class="card-body">
-                                <p class="mb-4">Number of Clients</p>
-                                <p class="fs-30 mb-2">47033</p>
-                                <p>0.22% (30 days)</p>
+                                <p class="mb-4"><i style="margin-right:10px" class="fas fa-ticket-alt"></i>Số lượng vé đã bán</p>
+                                <p class="fs-30 mb-2"> @ViewBag.tongve</p>
+
                             </div>
                         </div>
                     </div>
@@ -97,42 +101,60 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                        <p class="card-title">Order Details</p>
-                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                        <div class="d-flex flex-wrap mb-5">
-                            <div class="mr-5 mt-3">
-                                <p class="text-muted">Order value</p>
-                                <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
-                            </div>
-                            <div class="mr-5 mt-3">
-                                <p class="text-muted">Orders</p>
-                                <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
-                            </div>
-                            <div class="mr-5 mt-3">
-                                <p class="text-muted">Users</p>
-                                <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-muted">Downloads</p>
-                                <h3 class="text-primary fs-30 font-weight-medium">34040</h3>
-                            </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <p class="card-title">Line chart</p>
+
                         </div>
-                        <canvas id="order-chart" style="display: block; height: 199px; width: 398px;" width="497" height="248" class="chartjs-render-monitor"></canvas>
+                        <p class="font-weight-500">Đây là thống kê tổng số lượng vé bán ra ở mỗi tháng</p>
+                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"><ul class="1-legend"><li><span></span>Tổng vé bán ra</li><li><span></span>S </li></ul></div>
+                        <canvas id="myChart" width="868" height="433" style="display: block; height: 289px; width: 579px;"></canvas>
                     </div>
                 </div>
             </div>
+            @* <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                        <p class="card-title">Thông tin bay</p>
+                        <p class="font-weight-500">Đây là thông tin thống kế liên quan đến các chuyến bay.</p>
+                        <div class="d-flex flex-wrap mb-5">
+
+                            <div class="mr-5 mt-3">
+                                <p class="text-muted"><i class="fas fa-user-alt" style="margin-right:10px;color:#4B49AC"></i>Số lượng khách hàng</p>
+                                <h3 class="text-primary fs-30 font-weight-medium">@ViewBag.tongkhachhang</h3>
+                            </div>
+                            <div class="mr-5 mt-3">
+                                <p class="text-muted"><i style="margin-right:10px;color:#4B49AC" class="fas fa-dollar-sign"></i>Doanh thu</p>
+                                <h3 class="text-primary fs-30 font-weight-medium">djhbdsaydu</h3>
+                            </div>
+                        </div>*@
+
+            @*<div class="col-lg-6 grid-margin stretch-card" style="color:#4B49AC">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <h4 class="card-title">Line chart</h4>
+                                        <canvas id="lineChart" width="868" height="433" style="display: block; height: 289px; width: 579px;" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>*@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                         <div class="d-flex justify-content-between">
                             <p class="card-title">Sales Report</p>
-                            <a href="#" class="text-info">View all</a>
+
                         </div>
-                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"><ul class="1-legend"><li><span style="background-color: rgb(152, 189, 255);"></span>Offline Sales</li><li><span style="background-color: rgb(75, 73, 172);"></span>Online Sales</li></ul></div>
-                        <canvas id="sales-chart" width="497" height="248" style="display: block; height: 199px; width: 398px;" class="chartjs-render-monitor"></canvas>
+                        <p class="font-weight-500">Đây là thống kê giữa tổng số lượng vé bán ra so với số lượng vé của mỗi hạng vé</p>
+                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"><ul class="1-legend"><li><span style="background-color: rgb(152, 189, 255);"></span>Tổng vé bán ra</li><li><span style="background-color: rgb(75, 73, 172);"></span>Số lượng vé mỗi hạng </li></ul></div>
+                        <canvas id="myChart1" width="497" height="248" style="display: block; height: 199px; width: 398px;"></canvas>
+                        @*<canvas id="sales-chart" width="497" height="248" style="display: block; height: 199px; width: 398px;" class="chartjs-render-monitor"></canvas>*@
                     </div>
                 </div>
             </div>
@@ -323,192 +345,9 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title mb-0">Top Products</p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Search Engine Marketing</td>
-                                        <td class="font-weight-bold">$362</td>
-                                        <td>21 Sep 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Search Engine Optimization</td>
-                                        <td class="font-weight-bold">$116</td>
-                                        <td>13 Jun 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Display Advertising</td>
-                                        <td class="font-weight-bold">$551</td>
-                                        <td>28 Sep 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pay Per Click Advertising</td>
-                                        <td class="font-weight-bold">$523</td>
-                                        <td>30 Jun 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>E-Mail Marketing</td>
-                                        <td class="font-weight-bold">$781</td>
-                                        <td>01 Nov 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-danger">Cancelled</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Referral Marketing</td>
-                                        <td class="font-weight-bold">$283</td>
-                                        <td>20 Mar 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-warning">Pending</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Social media marketing</td>
-                                        <td class="font-weight-bold">$897</td>
-                                        <td>26 Oct 2018</td>
-                                        <td class="font-weight-medium"><div class="badge badge-success">Completed</div></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">To Do Lists</h4>
-                        <div class="list-wrapper pt-2">
-                            <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
-                                <li>
-                                    <div class="form-check form-check-flat">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Meeting with Urban Team
-                                            <i class="input-helper"></i>
-                                        </label>
-                                    </div>
-                                    <i class="remove ti-close"></i>
-                                </li>
-                                <li class="completed">
-                                    <div class="form-check form-check-flat">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox" checked="">
-                                            Duplicate a project for new customer
-                                            <i class="input-helper"></i>
-                                        </label>
-                                    </div>
-                                    <i class="remove ti-close"></i>
-                                </li>
-                                <li>
-                                    <div class="form-check form-check-flat">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Project meeting with CEO
-                                            <i class="input-helper"></i>
-                                        </label>
-                                    </div>
-                                    <i class="remove ti-close"></i>
-                                </li>
-                                <li class="completed">
-                                    <div class="form-check form-check-flat">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox" checked="">
-                                            Follow up of team zilla
-                                            <i class="input-helper"></i>
-                                        </label>
-                                    </div>
-                                    <i class="remove ti-close"></i>
-                                </li>
-                                <li>
-                                    <div class="form-check form-check-flat">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Level up for Antony
-                                            <i class="input-helper"></i>
-                                        </label>
-                                    </div>
-                                    <i class="remove ti-close"></i>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="add-items d-flex mb-0 mt-2">
-                            <input type="text" class="form-control todo-list-input" placeholder="Add new task">
-                            <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i class="icon-circle-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title mb-0">Projects</p>
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th class="pl-0  pb-2 border-bottom">Places</th>
-                                        <th class="border-bottom pb-2">Orders</th>
-                                        <th class="border-bottom pb-2">Users</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="pl-0">Kentucky</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">65</span>(2.15%)</p></td>
-                                        <td class="text-muted">65</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">Ohio</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">54</span>(3.25%)</p></td>
-                                        <td class="text-muted">51</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">Nevada</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">22</span>(2.22%)</p></td>
-                                        <td class="text-muted">32</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">North Carolina</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">46</span>(3.27%)</p></td>
-                                        <td class="text-muted">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">Montana</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">17</span>(1.25%)</p></td>
-                                        <td class="text-muted">25</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0">Nevada</td>
-                                        <td><p class="mb-0"><span class="font-weight-bold mr-2">52</span>(3.11%)</p></td>
-                                        <td class="text-muted">71</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pl-0 pb-0">Louisiana</td>
-                                        <td class="pb-0"><p class="mb-0"><span class="font-weight-bold mr-2">25</span>(1.32%)</p></td>
-                                        <td class="pb-0">14</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-4 stretch-card grid-margin">
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
@@ -573,93 +412,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 stretch-card grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title">Notifications</p>
-                        <ul class="icon-data-list">
-                            <li>
-                                <div class="d-flex">
-                                    <img src="~/Assets/Admin/images/faces/face1.jpg" alt="user">
-                                    <div>
-                                        <p class="text-info mb-1">Isabella Becker</p>
-                                        <p class="mb-0">Sales dashboard have been created</p>
-                                        <small>9:30 am</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex">
-                                    <img src="~/Assets/Admin/images/faces/face2.jpg" alt="user">
-                                    <div>
-                                        <p class="text-info mb-1">Adam Warren</p>
-                                        <p class="mb-0">You have done a great job #TW111</p>
-                                        <small>10:30 am</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex">
-                                    <img src="~/Assets/Admin/images/faces/face3.jpg" alt="user">
-                                    <div>
-                                        <p class="text-info mb-1">Leonard Thornton</p>
-                                        <p class="mb-0">Sales dashboard have been created</p>
-                                        <small>11:30 am</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex">
-                                    <img src="~/Assets/Admin/images/faces/face4.jpg" alt="user">
-                                    <div>
-                                        <p class="text-info mb-1">George Morrison</p>
-                                        <p class="mb-0">Sales dashboard have been created</p>
-                                        <small>8:50 am</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex">
-                                    <img src="~/Assets/Admin/images/faces/face5.jpg" alt="user">
-                                    <div>
-                                        <p class="text-info mb-1">Ryan Cortez</p>
-                                        <p class="mb-0">Herbs are fun and easy to grow.</p>
-                                        <small>9:00 am</small>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
         </div>
-        @*<div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title">Advanced Table</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                        <div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row">
-                                            <div class="col-sm-12">
-                                                <table id="example" class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
-                                                    <thead>
-                                                        <tr role="row"><th class="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style="width: 62px;">Quote#</th><th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Product: activate to sort column descending" style="width: 69px;">Product</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style="width: 116px;">Business type</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Policy holder: activate to sort column ascending" style="width: 108px;">Policy holder</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Premium: activate to sort column ascending" style="width: 78px;">Premium</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 58px;">Status</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style="width: 95px;">Updated at</th><th class="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 4px;"></th></tr>
-                                                    </thead>
-                                                    <tbody><tr class="odd"><td valign="top" colspan="8" class="dataTables_empty">Loading...</td></tr></tbody>
-                                                </table>
-                                            </div>
-                                        </div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+
     </div>
     <!-- content-wrapper ends -->
     <!-- partial:partials/_footer.html -->
@@ -672,3 +427,45 @@
     <!-- partial -->
 </div>
 
+@* Biểu đồ *@
+<script>
+    var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12];
+
+    new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: [ @ViewBag.T1, @ViewBag.T2,@ViewBag.T3,@ViewBag.T4,@ViewBag.T5,@ViewBag.T6,@ViewBag.T7, @ViewBag.T8,@ViewBag.T9,@ViewBag.T10,@ViewBag.T11,@ViewBag.T12],
+                borderColor: "blue",
+                fill: false
+            }]
+        },
+        options: {
+            legend: { display: false }
+        }
+    });
+</script>
+<script>
+    var xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+    var yValues = [ @ViewBag.tongtien1,  @ViewBag.tongtien2, @ViewBag.tongtien3, @ViewBag.tongtien4, @ViewBag.tongtien5, @ViewBag.tongtien6, @ViewBag.tongtien7,  @ViewBag.tongtien8, @ViewBag.tongtien9, @ViewBag.tongtien10, @ViewBag.tongtien11, @ViewBag.tongtien12];
+
+
+    new Chart("myChart1", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: "blue",
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Biểu đồ thống kê doanh thu năm 2021"
+            }
+        }
+    });
+</script>

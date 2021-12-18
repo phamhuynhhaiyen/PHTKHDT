@@ -1,5 +1,5 @@
-﻿
-@{
+﻿@{
+
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,11 +13,11 @@
         <div class="box">
             <div class="radio-group">
                 <label class="radio">
-                    <input type="radio" name="type" id="rdMotChieu" value="1" checked/>
+                    <input type="radio" name="type" id="rdMotChieu" value="1" checked />
                     <label for="rdMotChieu">Một chiều</label>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="type" id="rdHaiChieu" value="2"/>
+                    <input type="radio" name="type" id="rdHaiChieu" value="2" />
                     <label for="rdHaiChieu">Khứ hồi</label>
                 </label>
             </div>
@@ -174,7 +174,7 @@
         </div>
         <div class="box-item">
             <img src="https://38bb92d9c347dc7.cmccloud.com.vn/web/images/demo/dalat.jpg" />
-            <div class="info"><h3>Đà Lạt</h3></div>           
+            <div class="info"><h3>Đà Lạt</h3></div>
         </div>
     </div>
 </div>
@@ -233,7 +233,7 @@
         //Xử lý  radio button
         $('input:radio[name="type"]').change(function () {
             if ($(this).val() == 2) {
-                $('#timeCheckOut').prop("disabled", false);             
+                $('#timeCheckOut').prop("disabled", false);
             } else {
                 $('#timeCheckOut').prop("disabled", true);
                 $('#timeCheckOut').val("--")
@@ -250,8 +250,8 @@
                         $('#cbbDiemDi').append(option);
                         $('#cbbDiemDen').append(option);
                     })
-                    
-                    
+
+
                 }
             })
         }

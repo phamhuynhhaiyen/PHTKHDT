@@ -22,19 +22,19 @@
                     <div class="form-container">
                         <div class="control">
                             <p>Họ</p>
-                            <input type="text" />
+                            <input type="text" id="ho" value="" />
                         </div>
                         <div class="control">
                             <p>Tên đệm & Tên</p>
-                            <input type="text" />
+                            <input type="text" id="ten" value=""/>
                         </div>
                         <div class="control">
                             <p>Số điện thoại di động</p>
-                            <input type="tel" />
+                            <input type="tel" id="sdt" value="" />
                         </div>
                         <div class="control">
                             <p>Email</p>
-                            <input type="email" />
+                            <input type="email" id="email" value="" />
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                 {
                     for (int i = 1; i <= thongtin.EmBe; i++)
                     {
-                        <div class="form-info child">
+                        <div class="form-info baby">
                             <p class="title">Em bé @i</p>
                             <div class="form-container">
                                 <div class="control">
@@ -204,6 +204,7 @@
                     NgaySinh: $(this).find('input[name="txtNgaySinh"]').val(),
                     CMND: $(this).find('input[name="txtCMND"]').val(),
                     QuocTich: $(this).find('input[name="txtQuocTich"]').val(),
+                    LoaiKhachHang: "Người lớn"
                 })
             })
 
@@ -215,24 +216,49 @@
                     NgaySinh: $(this).find('input[name="txtNgaySinh"]').val(),
                     CMND: null,
                     QuocTich: $(this).find('input[name="txtQuocTich"]').val(),
+                    LoaiKhachHang: "Trẻ Em"
+                })
+            })
+
+            $.each($('.baby'), function (k, v) {
+                arrCus.push({
+                    Ho: $(this).find('input[name="txtHo"]').val(),
+                    Ten: $(this).find('input[name="txtTen"]').val(),
+                    SDT: null,
+                    NgaySinh: $(this).find('input[name="txtNgaySinh"]').val(),
+                    CMND: null,
+                    QuocTich: $(this).find('input[name="txtQuocTich"]').val(),
+                    LoaiKhachHang: "Em bé"
                 })
             })
         }
-        
 
         $('#btnPayment').click(function () {
+            //list khách hàng
             CreateArray();
+
+            //Người đặt vé
+            const obj = {
+                Ho: $("#ho").val(),
+                Ten: $("#ten").val(),
+                SDT: $("#sdt").val(),
+                Email: $("#email").val()
+            }
 
             $.ajax({
                 type: 'post',
                 url: '/Booking/CreateTicket',
                 data: {
                     arr: JSON.stringify(arrCus),
+                    nguoidat: JSON.stringify(obj),
                     machuyenbay: $('#txtMaChuyenBay').val(),
                     tongtien: $('#txtTongTien').val()
                 },
                 success: function (data) {
-                    window.location = "/Booking/ThanhToanMomo"
+                    if (data.code == 200) {
+                        alert('successul')
+                        window.location = "/Booking/ThanhToanMomo"
+                    }
                 }
             })
         })

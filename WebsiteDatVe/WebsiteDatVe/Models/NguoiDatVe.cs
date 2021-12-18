@@ -6,25 +6,27 @@ namespace WebsiteDatVe.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("TaiKhoan")]
-    public partial class TaiKhoan
+    [Table("NguoiDatVe")]
+    public partial class NguoiDatVe
     {
         [Key]
-        public long MaTaiKhoan { get; set; }
-
-        [StringLength(200)]
-        public string Email { get; set; }
+        public long MaNguoiDat { get; set; }
 
         [StringLength(50)]
-        public string MatKhau { get; set; }
+        public string Ho { get; set; }
 
         [StringLength(50)]
-        public string HoTen { get; set; }
+        public string Ten { get; set; }
 
         [StringLength(10)]
         public string SDT { get; set; }
 
-        [StringLength(10)]
-        public string Quyen { get; set; }
+        [StringLength(50)]
+        public string Email { get; set; }
+
+        [StringLength(50)]
+        public string MaVe { get; set; }
+
+        public virtual Ve Ve { get; set; }
     }
 }

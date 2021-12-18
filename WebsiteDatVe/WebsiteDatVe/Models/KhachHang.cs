@@ -33,6 +33,9 @@ namespace WebsiteDatVe.Models
         [StringLength(50)]
         public string MaVe { get; set; }
 
+        [StringLength(50)]
+        public string LoaiKhachHang { get; set; }
+
         public virtual Ve Ve { get; set; }
     }
 }

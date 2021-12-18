@@ -13,6 +13,7 @@ namespace WebsiteDatVe.Models
         public ChuyenBay()
         {
             Ves = new HashSet<Ve>();
+            VeDaLuus = new HashSet<VeDaLuu>();
         }
 
         [Key]
@@ -35,5 +36,8 @@ namespace WebsiteDatVe.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ve> Ves { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VeDaLuu> VeDaLuus { get; set; }
     }
 }

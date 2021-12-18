@@ -19,7 +19,6 @@ namespace WebsiteDatVe.Controllers
 
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public static string amount;
         public ActionResult Checkout(long id)
         {
             ThongTinDatVe thongtin = (ThongTinDatVe) Session["ThongTinDatVe"];
@@ -59,15 +58,17 @@ namespace WebsiteDatVe.Controllers
 
             return View();
         }
-
-        public JsonResult CreateTicket(string arr, long machuyenbay, double tongtien)
+        public JsonResult CreateTicket(string arr, long machuyenbay, double tongtien, string nguoidat)
         {
             try
             {
                 var listCus = new JavaScriptSerializer().Deserialize<List<KhachHang>>(arr);
+                var obj = new JavaScriptSerializer().Deserialize<NguoiDatVe>(nguoidat);
 
-                TaiKhoan taikhoan = (TaiKhoan) Session["TaiKhoan"];
+                TaiKhoan taikhoan = (TaiKhoan)Session["TaiKhoan"];
                 ThongTinDatVe thongtin = (ThongTinDatVe)Session["ThongTinDatVe"];
+
+
 
                 //Đặt vé
                 Ve ve = new Ve();
@@ -82,8 +83,12 @@ namespace WebsiteDatVe.Controllers
                 db.Ves.Add(ve);
                 db.SaveChanges();
 
+                //Tạo sesion 
+                Session["TongTien"] = tongtien;
+                Session["MaVe"] = ve.MaVe;
+
                 //Thêm khách hàng
-                foreach(var item in listCus)
+                foreach (var item in listCus)
                 {
                     KhachHang khachhang = new KhachHang();
                     khachhang.Ho = item.Ho;
@@ -93,33 +98,54 @@ namespace WebsiteDatVe.Controllers
                     khachhang.CMND = item.CMND;
                     khachhang.QuocTich = item.QuocTich;
                     khachhang.MaVe = ve.MaVe;
+                    khachhang.LoaiKhachHang = item.LoaiKhachHang;
                     db.KhachHangs.Add(khachhang);
                     db.SaveChanges();
                 }
 
+                //Thêm người đặt
+                NguoiDatVe nguoiDatVe = new NguoiDatVe();
+                nguoiDatVe.Ho = obj.Ho;
+                nguoiDatVe.Ten = obj.Ten;
+                nguoiDatVe.SDT = obj.SDT;
+                nguoiDatVe.Email = obj.Email;
+                nguoiDatVe.MaVe = ve.MaVe;
+                db.NguoiDatVes.Add(nguoiDatVe);
+                db.SaveChanges();
+
 
                 return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
-            }catch(Exception e)
+        }
+            catch (Exception e)
             {
-                return Json(new { code = 500, msg = e.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = 500, msg = e.Message
+    }, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public ActionResult Ticket()
+        public ActionResult Ticket(string id)
         {
-            return View();
+            Ve ve = (from v in db.Ves where v.MaVe == id select v).SingleOrDefault();
+
+            //Sân bay
+            ViewBag.DiemDi = db.SanBays.Where(x => x.MaSanBay == ve.ChuyenBay.DiemDi).Select(x => x.TenSanBay).SingleOrDefault();
+            ViewBag.DiemDen = db.SanBays.Where(x => x.MaSanBay == ve.ChuyenBay.DiemDen ).Select(x => x.TenSanBay).SingleOrDefault();
+
+            return View(ve);
         }
 
-        string serectkey = "sSFqWXSq4QXW9MSr5SDAaGNBjL7FCrIk";
+        
         public async Task<ActionResult> ThanhToanMomo()
         {
+
             string partnerCode = "MOMODDI520210624";
             string accessKey = "xc5ROj205YDvqrBn";
+            string serectkey = "sSFqWXSq4QXW9MSr5SDAaGNBjL7FCrIk";
             string orderId = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
-            string orderInfo = "Thanh Toán Momo";
-            string amount = "5000";
+            string orderInfo = "THANH TOÁN VÉ MÁY BAY";
+            string amount = Session["TongTien"].ToString();
             string redirectUrl = "http://localhost:55480/Booking/returnUrl";
             string ipnUrl = "http://localhost:55480/Booking/notifyurl";
             string requestType = "captureWallet";
@@ -173,23 +199,25 @@ namespace WebsiteDatVe.Controllers
         public ActionResult returnUrl()
         {
             string param = Request.QueryString.ToString().Substring(0, Request.QueryString.ToString().IndexOf("signature") - 1);
-            param = Server.UrlDecode(param);
-            MoMoSecurity crypto = new MoMoSecurity();
-            //string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
-            string serectKey = serectkey.ToString();
-            string signature = crypto.signSHA256(param, serectKey);
-            //if (signature != Request["signature"].ToString())
-            //{
-            //    ViewBag.Message = "Thông tin không hợp lệ!";
-            //    return View();
-            //}
+
+            //Thành công
+
+            string mave = Session["MaVe"].ToString();
             if (Request.QueryString["message"].Equals("Successful."))
             {
                 ViewBag.Message = "Thanh toán thành công!";
+                //Thay đổi trạng thái vé
+                Ve ve = (from v in db.Ves where v.MaVe == mave select v).FirstOrDefault();
+                ve.TinhTrang = "Paid";
+                db.SaveChanges();
             }
             else
             {
                 ViewBag.Message = "Thanh toán thất bại!";
+                //Thay đổi trạng thái vé
+                Ve ve = (from v in db.Ves where v.MaVe == mave select v).FirstOrDefault();
+                ve.TinhTrang = "Canceled";
+                db.SaveChanges();
                 return View();
                 
             }
@@ -199,5 +227,39 @@ namespace WebsiteDatVe.Controllers
         {
             return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
         }
+        
+        public JsonResult getKhachHang(string mave)
+        {
+            try
+            {
+                var lstKhachHang = (from k in db.KhachHangs where k.MaVe == mave select new { 
+                    HoTen = k.Ho + k.Ten,
+                    LoaiKhachHang = k.LoaiKhachHang
+                }).ToList();
+
+                return Json(new { code = 200, lst = lstKhachHang }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception e)
+            {
+                return Json(new { code = 500 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult HuyVe(string mave)
+        {
+            try
+            {
+                Ve ve = (from v in db.Ves where v.MaVe == mave select v).SingleOrDefault();
+                ve.TinhTrang = "request";
+                db.SaveChanges();
+
+                return Json(new { code = 200}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
     }
 }

@@ -13,6 +13,7 @@ namespace WebsiteDatVe.Models
         public Ve()
         {
             KhachHangs = new HashSet<KhachHang>();
+            NguoiDatVes = new HashSet<NguoiDatVe>();
         }
 
         [Key]
@@ -40,6 +41,7 @@ namespace WebsiteDatVe.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KhachHang> KhachHangs { get; set; }
 
-        public virtual TaiKhoan TaiKhoan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NguoiDatVe> NguoiDatVes { get; set; }
     }
 }

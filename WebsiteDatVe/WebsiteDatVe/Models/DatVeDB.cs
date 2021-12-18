@@ -16,10 +16,12 @@ namespace WebsiteDatVe.Models
         public virtual DbSet<HangBay> HangBays { get; set; }
         public virtual DbSet<KhachHang> KhachHangs { get; set; }
         public virtual DbSet<MayBay> MayBays { get; set; }
+        public virtual DbSet<NguoiDatVe> NguoiDatVes { get; set; }
         public virtual DbSet<SanBay> SanBays { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
         public virtual DbSet<Ve> Ves { get; set; }
+        public virtual DbSet<VeDaLuu> VeDaLuus { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -29,6 +31,11 @@ namespace WebsiteDatVe.Models
 
             modelBuilder.Entity<ChuyenBay>()
                 .HasMany(e => e.Ves)
+                .WithOptional(e => e.ChuyenBay)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ChuyenBay>()
+                .HasMany(e => e.VeDaLuus)
                 .WithOptional(e => e.ChuyenBay)
                 .WillCascadeOnDelete();
 
@@ -62,6 +69,15 @@ namespace WebsiteDatVe.Models
                 .WithOptional(e => e.MayBay)
                 .WillCascadeOnDelete();
 
+            modelBuilder.Entity<NguoiDatVe>()
+                .Property(e => e.SDT)
+                .IsFixedLength()
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NguoiDatVe>()
+                .Property(e => e.MaVe)
+                .IsUnicode(false);
+
             modelBuilder.Entity<TaiKhoan>()
                 .Property(e => e.Email)
                 .IsUnicode(false);
@@ -78,17 +94,17 @@ namespace WebsiteDatVe.Models
                 .Property(e => e.Quyen)
                 .IsFixedLength();
 
-            modelBuilder.Entity<TaiKhoan>()
-                .HasMany(e => e.Ves)
-                .WithOptional(e => e.TaiKhoan)
-                .WillCascadeOnDelete();
-
             modelBuilder.Entity<Ve>()
                 .Property(e => e.MaVe)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Ve>()
                 .HasMany(e => e.KhachHangs)
+                .WithOptional(e => e.Ve)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Ve>()
+                .HasMany(e => e.NguoiDatVes)
                 .WithOptional(e => e.Ve)
                 .WillCascadeOnDelete();
         }

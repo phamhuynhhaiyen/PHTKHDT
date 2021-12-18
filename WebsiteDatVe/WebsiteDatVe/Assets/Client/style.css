@@ -46,6 +46,10 @@ section{
     font-weight: 700;
 }
 
+.btn-primary:disabled{
+    cursor:not-allowed;
+}
+
 .btn-info {
     font-size: 1.6rem;
     color: #fff !important;

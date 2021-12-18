@@ -30,14 +30,49 @@ namespace WebsiteDatVe.Controllers
             thongTinDatVe.NgayDi = ngaydi;
             thongTinDatVe.HangGhe = hangghe;
             Session["ThongTinDatVe"] = thongTinDatVe;
-            //search
+            //Tìm chuyến bay có ngày phù hợp
             List<ChuyenBay> flights = (from c
                           in db.ChuyenBays
                            where c.DiemDi == diemdi && c.DiemDen == diemden
-                           && EntityFunctions.TruncateTime(c.ThoiGianDi) == EntityFunctions.TruncateTime(ngaydi)
+                           && EntityFunctions.TruncateTime(c.ThoiGianDi) == EntityFunctions.TruncateTime(ngaydi) && c.ThoiGianDi > DateTime.Now
                            select c).ToList();
-            //Kiểm tra vé trống
-            return View(flights);
+            //Kiểm tra chuyến bay còn vé
+            //Tạo list mới lưu số chuyến bay còn vé
+            List<ChuyenBay> chuyenbays = new List<ChuyenBay>();
+
+            foreach (var item in flights)
+            {
+
+                //Lấy ra số lượng ghế ban đầu của hạng ghế đang tìm
+                int socho = (int) item.MayBay.SoGhePhoThong; 
+
+                if (hangghe == "Phổ thông đặc biệt")
+                {
+                    socho = (int)item.MayBay.SoGhePhoThongDacBiet;
+                }
+                if (hangghe == "Thương gia")
+                {
+                    socho = (int)item.MayBay.SoGheThuongGia;
+                }
+                if (hangghe == "Hạng nhất")
+                {
+                    socho = (int)item.MayBay.SoGheHangNhat;
+                }
+
+                //Lấy ra số vé đã được đặt của hạng ghế đang tìm
+                int slve = (from v in db.Ves where v.MaChuyenBay == item.MaChuyenBay && v.HangVe == hangghe && v.TinhTrang != "Canceled" select v).Count();
+
+                //Kiểm tra có đủ chỗ nếu đặt thêm không
+
+                if(socho > (slve+nguoilon+treem))
+                {
+                    chuyenbays.Add(item);
+                }
+                
+            }
+
+
+            return View(chuyenbays);
         }
 
 

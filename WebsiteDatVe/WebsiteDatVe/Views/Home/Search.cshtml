@@ -33,19 +33,19 @@
             <div class="ticket">
                 <div class="ticket-content">
                     <div class="left">
-                        <img src="~/Assets/images/@item.MayBay.HangBay.Logo" />
+                        <img src="@item.MayBay.HangBay.Logo" />
                     </div>
                     <div class="center">
                         <div class="center-item">
-                            <h3>7:30</h3>
+                            <h3>@item.ThoiGianDi.GetValueOrDefault().ToString("HH:mm")</h3>
                             <span>@ViewBag.DiemDi</span>
                         </div>
                         <div class="center-item">
                             <p>--- <i class="fas fa-plane"></i> ---</p>
-                            <span>2h</span>
+                            <span>@item.ThoiGianDen.GetValueOrDefault().Subtract(item.ThoiGianDi.GetValueOrDefault()).TotalHours giờ</span>
                         </div>
                         <div class="center-item">
-                            <h3>9:30</h3>
+                            <h3>@item.ThoiGianDen.GetValueOrDefault().ToString("HH:mm")</h3>
                             <span>@ViewBag.DiemDen</span>
                         </div>
                     </div>
@@ -71,9 +71,9 @@
             if ($('#session').val() == 0) {
                 $('.sign-in').addClass('show')
             } else {
-                window.location = "/Booking/Checkout/"+ this.id
+                window.location = "/Booking/Checkout/" + this.id
             }
         })
-    </script>    
+    </script>
 }
 
