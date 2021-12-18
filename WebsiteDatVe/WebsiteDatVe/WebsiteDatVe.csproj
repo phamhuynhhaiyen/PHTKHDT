@@ -1768,6 +1768,8 @@
     <Content Include="Views\User\Saved.cshtml" />
     <Content Include="Views\User\MyBooking.cshtml" />
     <Content Include="Views\Booking\Ticket.cshtml" />
+    <Content Include="Views\Booking\ThanhToanMomo.cshtml" />
+    <Content Include="Views\Booking\returnUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
