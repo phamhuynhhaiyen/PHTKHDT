@@ -6,15 +6,19 @@
 }
 
 <div class="search-result">
-    <div class="search-info">
-        <div class="content">
-            <h3>@ViewBag.DiemDi → @ViewBag.DiemDen</h3>
-            <p><span>@ViewBag.NgayDi</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@ViewBag.HangGhe</span></p>
+    @{
+        WebsiteDatVe.Models.ThongTinDatVe thongtin = (WebsiteDatVe.Models.ThongTinDatVe)Session["ThongTinDatVe"];
+        <div class="search-info">
+            <div class="content">
+                <h3>@ViewBag.DiemDi → @ViewBag.DiemDen</h3>
+                <p><span>@thongtin.NgayDi.ToString("dd/M/yyyy")</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@thongtin.HangGhe</span></p>
+            </div>
+            <div class="button">
+                <button><i class="fas fa-search"></i>Đổi tìm kiếm</button>
+            </div>
         </div>
-        <div class="button">
-            <button><i class="fas fa-search"></i>Đổi tìm kiếm</button>
-        </div>
-    </div>
+    }
+
 
     <div class="search-filter">
         <h4>Bộ lọc</h4>

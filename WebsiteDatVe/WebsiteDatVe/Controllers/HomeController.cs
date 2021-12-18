@@ -19,10 +19,17 @@ namespace WebsiteDatVe.Controllers
         {
             ViewBag.DiemDi = db.SanBays.Where(x => x.MaSanBay.Equals(diemdi)).Select(x => x.TenSanBay).SingleOrDefault();
             ViewBag.DiemDen = db.SanBays.Where(x => x.MaSanBay.Equals(diemden)).Select(x => x.TenSanBay).SingleOrDefault();
-            ViewBag.NgayDi = ngaydi.ToString("dd/M/yyyy");
-            ViewBag.HangGhe = hangghe;
             ViewBag.SoLuong = nguoilon + treem + embe;
 
+            ThongTinDatVe thongTinDatVe = new ThongTinDatVe();
+            thongTinDatVe.DiemDen = diemden;
+            thongTinDatVe.DiemDi = diemdi;
+            thongTinDatVe.NguoiLon = nguoilon;
+            thongTinDatVe.TreEm = treem;
+            thongTinDatVe.EmBe = embe;
+            thongTinDatVe.NgayDi = ngaydi;
+            thongTinDatVe.HangGhe = hangghe;
+            Session["ThongTinDatVe"] = thongTinDatVe;
             //search
             List<ChuyenBay> flights = (from c
                           in db.ChuyenBays

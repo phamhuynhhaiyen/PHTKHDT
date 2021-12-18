@@ -23,7 +23,12 @@ namespace WebsiteDatVe.Controllers
             try
             {
                 Boolean thanhcong = false;
-                TaiKhoan user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select u).FirstOrDefault();         
+                var user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select new { 
+                u.Email,
+                u.HoTen,
+                u.Quyen,
+                u.SDT
+                });         
                 if(user != null)
                 {
                     thanhcong = true;

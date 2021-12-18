@@ -149,6 +149,7 @@
     <Compile Include="Models\SanBay.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TaiKhoan.cs" />
+    <Compile Include="Models\ThongTinDatVe.cs" />
     <Compile Include="Models\Ve.cs" />
     <Compile Include="MoMoSecurity.cs" />
     <Compile Include="PaymentRequest.cs" />
@@ -1406,6 +1407,7 @@
     <Content Include="Assets\Client\style.css" />
     <Content Include="Assets\images\banner-flight.jpg" />
     <Content Include="Assets\images\Logo-Vietjet.png" />
+    <Content Include="Assets\images\Logo-Bamboo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1801,9 +1803,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63299</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44387/</IISUrl>
+          <IISUrl>http://localhost:55480/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

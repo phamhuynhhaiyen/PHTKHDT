@@ -22,6 +22,8 @@ $(document).ready(function () {
 
     });
 
+    flatpickr("input[name='txtNgaySinh']", {})
+
     $('#btnLogin').click(function () {
         $('.sign-in').addClass('show')
     })
@@ -60,12 +62,16 @@ $(document).ready(function () {
                     password: $('#txtPwd').val()
                 },
                 success: function (data) {
-                    if (data.thanhcong == false) {
-                        $("#txtMsg").empty();
-                        $("#txtMsg").append("Email hoặc mật khẩu không chính xác!");
-                    } else {
-                        alert("Đăng nhập thành công!");
-                        location.reload();
+                    console.log(data);
+                    if (data.code == 200) {
+                        console.log(data);
+                        if (data.thanhcong == true) {
+                            alert("Đăng nhập thành công!");
+                            location.reload();                           
+                        } else {
+                            $("#txtMsg").empty();
+                            $("#txtMsg").append("Email hoặc mật khẩu không chính xác!");
+                        }
                     }
                 }
             })

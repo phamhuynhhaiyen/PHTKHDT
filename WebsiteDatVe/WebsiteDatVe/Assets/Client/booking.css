@@ -170,8 +170,10 @@
     background: var(--light-blue);
     font-size: 1.6rem;
     padding: 3rem;
-    justify-content:center;
+    flex-direction:column;
+    align-items:center;
     display:flex;
+    gap:3rem;
 }
 
 .e-ticket {
