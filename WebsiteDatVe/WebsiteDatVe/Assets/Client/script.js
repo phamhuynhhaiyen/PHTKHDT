@@ -73,7 +73,12 @@ $(document).ready(function () {
                         console.log(data);
                         if (data.thanhcong == true) {
                             alert("Đăng nhập thành công!");
-                            location.reload();                           
+                            if (data.quyen == 0) {
+                                location.reload();
+                            } else {
+                                window.location = '/Admin/TrangChu/Index'
+                            }
+                        
                         } else {
                             $("#txtMsg").empty();
                             $("#txtMsg").append("Email hoặc mật khẩu không chính xác!");
@@ -84,6 +89,13 @@ $(document).ready(function () {
         }
     })
 
+    $(".btn-info").click(function () {
+        $('.dropdown').addClass('active');
+    })
+
+    $("#btnLogout").click(function () {
+        window.location = "/User/Logout"
+    })
 
     //window.onclick = function (e) {
     //    if (!e.target.matches(".form-group")) {

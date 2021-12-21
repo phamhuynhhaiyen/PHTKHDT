@@ -36,9 +36,17 @@
 
             @if (Session["TaiKhoan"] != null)
             {
-                //WebsiteDatVe.Models.TaiKhoan taikhoan = (WebsiteDatVe.Models.TaiKhoan)Session["TaiKhoan"];
-                <button class="btn-info"><i class="fas fa-user"></i></button>
+                WebsiteDatVe.Models.TaiKhoan taikhoan = (WebsiteDatVe.Models.TaiKhoan)Session["TaiKhoan"];
+        <button class="btn-info">
+            <i class="fas fa-user"></i>
+            <div class="dropdown">
+                <div class="dropdown-header">@taikhoan.HoTen</div>
+                <div class="dropdown-item">Chỉnh sửa thông tin</div>
+                <div class="dropdown-item" id="btnLogout">Đăng xuất</div>
+            </div>
+        </button>
                 <input hidden id="session" value="1" />
+                
             }
             else
             {

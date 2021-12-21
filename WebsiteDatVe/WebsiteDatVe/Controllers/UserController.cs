@@ -23,13 +23,15 @@ namespace WebsiteDatVe.Controllers
             try
             {
                 Boolean thanhcong = false;
-                TaiKhoan user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select u).FirstOrDefault();         
+                TaiKhoan user = (from u in db.TaiKhoans where u.Email == email && u.MatKhau == password select u).FirstOrDefault();
+                string quyen = "";
                 if(user != null)
                 {
                     thanhcong = true;
                     Session["TaiKhoan"] = user;
+                    quyen = user.Quyen;
                 }
-                return Json(new { code = 200, user = user, thanhcong = thanhcong }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = 200, user = user, thanhcong = thanhcong , quyen = quyen}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -70,6 +72,12 @@ namespace WebsiteDatVe.Controllers
             TaiKhoan taikhoan = (TaiKhoan)Session["TaiKhoan"];
             List<Ve> lstVe = (from v in db.Ves where v.MaTaiKhoan == taikhoan.MaTaiKhoan orderby v.NgayDat descending select v).ToList();
             return View(lstVe);
+        }
+
+        public ActionResult Logout()
+        {
+            Session["Taikhoan"] = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }
