@@ -40,7 +40,28 @@ namespace WebsiteDatVe.Controllers
         //Đã lưu
         public ActionResult Saved()
         {
-            return View();
+            List<VeDaLuu> list = db.VeDaLuus.ToList();
+            return View(list);
+        }
+
+        public JsonResult SavedTicket(int id)
+        {
+            try
+            {
+                TaiKhoan taikhoan = (TaiKhoan)Session["TaiKhoan"];
+                VeDaLuu ve = new VeDaLuu();
+                ChuyenBay chuyen = (from v in db.ChuyenBays where v.MaChuyenBay == id select v).SingleOrDefault();
+                ve.MaChuyenBay = id;
+                ve.MaTaiKhoan = taikhoan.MaTaiKhoan;
+                db.VeDaLuus.Add(ve);
+                db.SaveChanges();
+                return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         //Lịch sử đặt vé

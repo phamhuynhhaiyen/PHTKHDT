@@ -9,6 +9,8 @@ $(document).ready(function () {
     })
 
     //Xu li chon ngay
+
+
     flatpickr("#timeCheckIn", {
         minDate: "today",
 /*        dateFormat: "d-m-Y",*/
@@ -20,6 +22,10 @@ $(document).ready(function () {
             });
         },
 
+    });
+
+    flatpickr("#timeCheckOut", {
+        minDate: $("#timeCheckIn").val()
     });
 
     flatpickr("input[name='txtNgaySinh']", {})

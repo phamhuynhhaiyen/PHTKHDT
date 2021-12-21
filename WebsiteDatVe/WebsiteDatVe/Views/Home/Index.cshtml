@@ -188,6 +188,7 @@
         var nguoilon = 1;
         var treem = 0;
         var embe = 0;
+       
 
         $('.nguoilon').html(nguoilon);
         $('.treem').html(treem);
@@ -230,6 +231,16 @@
         })
 
 
+       
+
+        //Xử lý vé khứ hồi
+        var ngayve = null
+        $('#timeCheckOut').change(function () {
+            if ($(this).val() != "--") {
+                ngayve = $(this).val()
+            }
+        })
+
         //Xử lý  radio button
         $('input:radio[name="type"]').change(function () {
             if ($(this).val() == 2) {
@@ -237,6 +248,7 @@
             } else {
                 $('#timeCheckOut').prop("disabled", true);
                 $('#timeCheckOut').val("--")
+                ngayve = null
             }
         })
 
@@ -251,14 +263,18 @@
                         $('#cbbDiemDen').append(option);
                     })
 
-
                 }
             })
         }
 
         //Tìm chuyến bay
         $('#btnFind').click(function () {
-            window.location = '/Home/Search/?diemdi=' + $('#cbbDiemDi').val() + '&diemden=' + $('#cbbDiemDen').val() + '&nguoilon=' + nguoilon + '&treem=' + treem + '&embe=' + embe + '&ngaydi=' + $('#timeCheckIn').val() + '&hangghe=' + $('#LoaiGhe').html();
+            if (ngayve == null) {
+                window.location = '/Home/Search/?diemdi=' + $('#cbbDiemDi').val() + '&diemden=' + $('#cbbDiemDen').val() + '&nguoilon=' + nguoilon + '&treem=' + treem + '&embe=' + embe + '&ngaydi=' + $('#timeCheckIn').val() + '&hangghe=' + $('#LoaiGhe').html();
+            } else {
+                window.location = '/Home/Search2Way/?diemdi=' + $('#cbbDiemDi').val() + '&diemden=' + $('#cbbDiemDen').val() + '&nguoilon=' + nguoilon + '&treem=' + treem + '&embe=' + embe + '&ngaydi=' + $('#timeCheckIn').val() + '&ngayve=' + ngayve + '&hangghe=' + $('#LoaiGhe').html();
+            }
+            
         })
 
     </script>

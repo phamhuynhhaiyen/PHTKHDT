@@ -6,14 +6,107 @@
     padding: 3rem 17rem;
 }
 
-.search-info{
+.search-result-2 {
+    width: 100%;
+    height: 100%;
+    background: var(--light-blue);
+    font-size: 1.6rem;
+    padding: 3rem 17rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.search-result-2 .left-panel {
+    width: 35%;
+}
+.search-result-2 .left-panel .container{
+    background: #fff;
+    box-shadow: rgb(3,18,26,0.2) 0px 1px 2px;
+    padding: 3rem 2rem;
+    border-radius: 0.5rem;
+}
+
+.search-result-2 .flight-selected .head, .search-result-2 .flight-selected .center{
+    display: flex;
+    justify-content: space-between;
+    margin-top:1rem;
+}
+
+
+.search-result-2 .flight-selected .head img{
+    width:60px;
+    object-fit:contain
+}
+
+.search-result-2 .flight-selected .btn-change{
+    width:100%;
+    background:var(--light-blue);
+    border-radius:0.75rem;
+    font-weight:600;
+    color:var(--blue);
+    padding:1rem;
+    margin-top:1rem;
+    font-size:1.6rem;
+    cursor:pointer;
+}
+.search-result-2 .flight-selected .head p {
+    font-weight: 600;
+}
+
+
+.search-result-2 .left-panel .container .title{
+    font-weight:600;
+    padding-bottom:1rem;
+    border-bottom:1px solid #ccc;
+}
+
+.search-result-2 .left-panel .total{
+    border-top:1px solid #ccc; 
+    padding-top:2rem;
+    margin-top:1rem;
+    display:none;
+}
+
+.search-result-2 .left-panel .total.show{
+    display:inherit;
+}
+
+.flight-no{
     display:flex;
+    align-items:center;
+    gap:2rem;
+    padding:2rem 0;
+    
+}
+
+
+.flight-no:last-child{
+    padding-bottom:0;
+}
+
+.flight-no .no{
+    color:#fff;
+    background:var(--blue);
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    text-align:center;
+    font-weight:600;
+    line-height:3rem;
+}
+
+.search-result-2 .right-panel {
+    width: 100%;
+}
+
+.search-info {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     background: #fff;
     box-shadow: rgb(3,18,26,0.2) 0px 1px 2px;
-    padding:3rem;
-    border-radius:0.5rem;
+    padding: 3rem;
+    border-radius: 0.5rem;
 }
 
 .search-info h3{
@@ -124,4 +217,60 @@
 .ticket-option p{
     cursor: pointer;
     font-weight:600;
+}
+
+.modal .container{
+    font-size:1.6rem;
+    padding:2rem;
+    border-radius:0.5rem;
+    background:#fff;
+}
+
+.modal .container .ticket-item{
+    display:flex;
+    justify-content:space-between;
+    width:800px;
+    padding:2rem 0;
+}
+
+.modal .container .ticket-item p{
+    color:#666;
+}
+
+.modal .container .head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:1rem;
+}
+
+.modal .container .head i{
+   font-size:2rem;
+   cursor:pointer
+}
+
+.modal .container .foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+
+
+.modal .container .ticket-item h4, .modal .container .ticket-item img{
+    margin-bottom:1rem;
+}
+
+.modal .container .ticket-item .center{
+    display:flex;
+    gap:2rem;
+}
+
+.modal .container .ticket-item .info{
+    display:flex;
+    gap:3rem;
+}
+
+.modal .container .ticket-item .right img{
+    width:60px;
+    object-fit:contain
 }

@@ -72,7 +72,7 @@
         {
             <button class="btn-primary" disabled>Đã huỷ</button>
         }
-        @if (Model.TinhTrang == "request")
+        else if (Model.TinhTrang == "request")
         {
             <button class="btn-primary" disabled>Đã gửi yêu cầu hủy</button>
         }

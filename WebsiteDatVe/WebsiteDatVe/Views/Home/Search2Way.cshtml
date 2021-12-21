@@ -1,0 +1,383 @@
+﻿
+@{
+    ViewBag.Title = "Search2Way";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    WebsiteDatVe.Models.ThongTinDatVe thongtin = (WebsiteDatVe.Models.ThongTinDatVe)Session["ThongTinDatVe"];
+    <div class="search-result-2">
+        <div class="left-panel">
+            <div class="container">
+                <h3 class="title">
+                    Chuyến bay của bạn
+                </h3>
+                <div class="flight-no">
+                    <div class="no"><span>1</span></div>
+                    <div class="item">
+                        <p>@thongtin.NgayDi.ToString("dd/M/yyyy")</p>
+                        <h4>@ViewBag.DiemDi → @ViewBag.DiemDen</h4>
+                    </div>
+                </div>
+                <div class="flight-selected" id="frmChieuDi">
+
+                </div>
+                <div class="flight-no">
+                    <div class="no"><span>2</span></div>
+                    <div class="item">
+                        <p>@thongtin.NgayVe.ToString("dd/M/yyyy")</p>
+                        <h4>@ViewBag.DiemDen → @ViewBag.DiemDi</h4>
+                    </div>
+                </div>
+                <div class="flight-selected" id="frmChieuVe">
+
+                </div>
+                <div class="total" id="frmtotal">
+                    <h3>Giá tiền</h3>
+                    <h3 style="color:red; margin-top:1rem;" id="totalcost"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+
+            <div class="search-info">
+                <div class="content">
+                    <h3 id="place">@ViewBag.DiemDi → @ViewBag.DiemDen</h3>
+                    <p><span id="date">@thongtin.NgayDi.ToString("dd/M/yyyy")</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@thongtin.HangGhe</span></p>
+                </div>
+                <div class="button">
+                    <button><i class="fas fa-search"></i>Đổi tìm kiếm</button>
+                </div>
+            </div>
+
+            <div class="search-filter">
+                <h4>Bộ lọc</h4>
+                <div class="item">Thời gian bay <i class="fas fa-sort-down"></i></div>
+                <div class="item">Hãng hàng không <i class="fas fa-sort-down"></i></div>
+
+            </div>
+
+            <div class="ticket-container" id="frmTicket">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalInfo">
+        <div class="container">
+            <div class="head">
+                <h3>CHUYẾN BAY CỦA BẠN</h3>
+                <i class="fa fa-times" id="close"></i>
+            </div>
+            <div class="ticket-item">
+                <div class="info">
+                    <div class="left">
+                        <h4>Khởi hành</h4>
+                        <p>@thongtin.NgayDi.ToString("D", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</p>
+                    </div>
+                    <div class="right">
+                        <img id="imglogo1"/>
+                        <p>@thongtin.HangGhe</p>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <div class="center-item">
+                        <h4 id="txtGioDi1">07: 30</h4>
+                        <span>@ViewBag.DiemDi</span>
+                    </div>
+                    <div class="center-item">
+                        <p>--- <i class="fas fa-plane"></i> ---</p>
+                        <span id="txtTongTG1">2 giờ</span>
+                    </div>
+                    <div class="center-item">
+                        <h4 id="txtGioDen1">09: 30</h4>
+                        <span>@ViewBag.DiemDen</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ticket-item">
+                <div class="info">
+                    <div class="left">
+                        <h4>Khứ hồi</h4>
+                        <p>@thongtin.NgayVe.ToString("D", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</p>
+                    </div>
+                    <div class="right">
+                        <img id="imglogo2" />
+                        <p>@thongtin.HangGhe</p>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <div class="center-item">
+                        <h4 id="txtGioDi2">07: 30</h4>
+                        <span>@ViewBag.DiemDen</span>
+                    </div>
+                    <div class="center-item">
+                        <p>--- <i class="fas fa-plane"></i> ---</p>
+                        <span id="txtTongTG2">2 giờ</span>
+                    </div>
+                    <div class="center-item">
+                        <h4 id="txtGioDen2">09: 30</h4>
+                        <span>@ViewBag.DiemDi</span>
+                    </div>
+                </div>
+            </div>
+            <div class="foot">
+                <h3>Tổng cộng: <span style="color:red" id="txtTongTien">1,252,222 VND/Khách</span></h3>
+                <button class="btn-primary" id="btnBooking">Đặt</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            getChuyenBay()
+        })
+        var listDi;
+        var listVe;
+        var tongtien = 0;
+        var tienve1 = 0;
+        var tienve2 = 0;
+        var ma1;
+        var ma2;
+        function getChuyenBay() {
+            $.ajax({
+                type: 'get',
+                url: '/Home/GetListChuyenBay',
+                success: function (data) {
+                    listDi = data.lstdi;
+                    listVe = data.lstve;
+                    $("#frmTicket").empty();
+                    $.each(data.lstdi, function (k, v) {
+                        let ticket = `<div class="ticket">
+                    <div class="ticket-content">
+                        <div class="left">
+                            <img src="`+ v.HangBay + `" />
+                        </div>
+                        <div class="center">
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDi + `</h3>
+                                <span>`+ v.DiemDi + `</span>
+                            </div>
+                            <div class="center-item">
+                                <p>--- <i class="fas fa-plane"></i> ---</p>
+                                <span>`+ v.TongThoiGian + ` giờ</span>
+                            </div>
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDen + `</h3>
+                                <span>`+ v.DiemDen + `</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="icon"><i class="far fa-bookmark"></i></div>
+                            <h3>`+ v.Gia + `  VNĐ/khách</h3>
+                            <button id="`+ v.MaChuyenBay + `" name="btnChonChieuDi">Chọn vé</button>
+                        </div>
+                    </div>
+                    <div class="ticket-option">
+                        <p>Chi tiết chuyến bay</p>
+                        <p>Chi tiết vé</p>
+                    </div>
+                </div>`;
+                        $("#frmTicket").append(ticket);
+                    })
+                }
+            })
+        }
+
+        $(document).on('click', "button[name = 'btnChonChieuDi']", function () {
+            if ($('#session').val() == 0) {
+                $('.sign-in').addClass('show')
+            } else {
+                $("#frmTicket").empty();
+                $.each(listVe, function (k, v) {
+                    let ticket = `<div class="ticket">
+                    <div class="ticket-content">
+                        <div class="left">
+                            <img src="`+ v.HangBay + `" />
+                        </div>
+                        <div class="center">
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDi + `</h3>
+                                <span>`+ v.DiemDi + `</span>
+                            </div>
+                            <div class="center-item">
+                                <p>--- <i class="fas fa-plane"></i> ---</p>
+                                <span>`+ v.TongThoiGian + ` giờ</span>
+                            </div>
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDen + `</h3>
+                                <span>`+ v.DiemDen + `</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="icon"><i class="far fa-bookmark"></i></div>
+                            <h3>`+ v.Gia + `  VNĐ/khách</h3>
+                            <button id="`+ v.MaChuyenBay + `" name="btnChonChieuVe">Chọn vé</button>
+                        </div>
+                    </div>
+                    <div class="ticket-option">
+                        <p>Chi tiết chuyến bay</p>
+                        <p>Chi tiết vé</p>
+                    </div>
+                </div>`;
+                    $("#frmTicket").append(ticket);
+                })
+
+                ma1 = this.id;
+
+                $.ajax({
+                    type: 'get',
+                    url: '/Home/GetChuyenBay',
+                    data: {
+                        machuyenbay: this.id
+                    },
+                    success: function (data) {
+                        $('#frmChieuDi').empty();
+                        var chuyenbay = data.chuyenbay;
+                        let item = `<div class="head">
+                                <img src="`+ chuyenbay.HangBay + `">
+                                <p>Chi tiết</p>
+                            </div>
+                            <div class="center">
+                                <div class="center-item">
+                                    <h3>`+ chuyenbay.ThoiGianDi + `</h3>
+                                    <span>`+ data.diemdi + `</span>
+                                </div>
+                                <div class="center-item">
+                                    <p>--- <i class="fas fa-plane"></i> ---</p>
+                                    <span>`+ chuyenbay.TongThoiGian + `</span>
+                                </div>
+                                <div class="center-item">
+                                    <h3>`+ chuyenbay.ThoiGianDen + `</h3>
+                                    <span>`+ data.diemden + `</span>
+                                </div>
+                            </div>
+                            <button class="btn-change" id="btnDoiChuyen">Đổi chuyến bay đi</button>`;
+                        $('#frmChieuDi').append(item);
+                        $('#place').html(data.diemden + " → " + data.diemdi);
+                        $('#date').html("@thongtin.NgayVe.ToString("dd/M/yyyy")");
+                        tienve1 = chuyenbay.Gia;
+                        tongtien = tienve1 + tienve2
+                        $('#totalcost').html(tongtien.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + " VND/khách");
+
+                        //Gán cho modal
+                        $('#imglogo1').attr('src', chuyenbay.HangBay);
+                        $('#txtGioDi1').html(chuyenbay.ThoiGianDi);
+                        $('#txtGioDen1').html(chuyenbay.ThoiGianDen);
+                        $('#txtTongTG1').html(chuyenbay.TongThoiGian);
+
+                    }
+                })
+
+                $('#frmtotal').addClass('show');
+            }
+        });
+
+        $(document).on('click', "button[name = 'btnChonChieuVe']", function () {
+            ma2 = this.id;
+
+            $.ajax({
+                type: 'get',
+                url: '/Home/GetChuyenBay',
+                data: {
+                    machuyenbay: this.id
+                },
+                success: function (data) {
+                    $('#frmChieuVe').empty();
+                    var chuyenbay = data.chuyenbay;
+                    let item = `<div class="head">
+                                <img src="`+ chuyenbay.HangBay +`">
+                                <p>Chi tiết</p>
+                            </div>
+                            <div class="center">
+                                <div class="center-item">
+                                    <h3>`+ chuyenbay.ThoiGianDi + `</h3>
+                                    <span>`+ data.diemden +`</span>
+                                </div>
+                                <div class="center-item">
+                                    <p>--- <i class="fas fa-plane"></i> ---</p>
+                                    <span>`+ chuyenbay.TongThoiGian +`</span>
+                                </div>
+                                <div class="center-item">
+                                    <h3>`+ chuyenbay.ThoiGianDen + `</h3>
+                                    <span>`+ data.diemdi +`</span>
+                                </div>
+                            </div>`;
+                    $('#frmChieuVe').append(item);
+                    tienve2 = chuyenbay.Gia;
+                    tongtien = tienve1 + tienve2
+                    $('#totalcost').html(tongtien.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + " VND/khách");
+
+
+                    //Gán cho modal
+                    $('#imglogo2').attr('src', chuyenbay.HangBay);
+                    $('#txtGioDi2').html(chuyenbay.ThoiGianDi);
+                    $('#txtGioDen2').html(chuyenbay.ThoiGianDen);
+                    $('#txtTongTG2').html(chuyenbay.TongThoiGian);
+                    $('#txtTongTien').html(tongtien.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + " VND/khách");
+
+                    $('#modalInfo').addClass('active');
+
+                }
+            })
+
+        });
+
+        $("#close").click(function () {
+            $('#modalInfo').removeClass('active');
+            $('#frmChieuVe').empty();
+            tienve2 = 0;
+            tongtien = tienve1 + tienve2
+            $('#totalcost').html(tongtien.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + " VND/khách");
+        })
+
+        $(document).on('click', "#btnDoiChuyen", function () {
+            $("#frmTicket").empty();
+            $("#frmChieuDi").empty();
+            $('#frmtotal').removeClass('show');
+            tienve1 = 0;
+            $.each(listDi, function (k, v) {
+                let ticket = `<div class="ticket">
+                    <div class="ticket-content">
+                        <div class="left">
+                            <img src="`+ v.HangBay + `" />
+                        </div>
+                        <div class="center">
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDi + `</h3>
+                                <span>`+ v.DiemDi + `</span>
+                            </div>
+                            <div class="center-item">
+                                <p>--- <i class="fas fa-plane"></i> ---</p>
+                                <span>`+ v.TongThoiGian + ` giờ</span>
+                            </div>
+                            <div class="center-item">
+                                <h3>`+ v.ThoiGianDen + `</h3>
+                                <span>`+ v.DiemDen + `</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="icon"><i class="far fa-bookmark"></i></div>
+                            <h3>`+ v.Gia + `  VNĐ/khách</h3>
+                            <button id="`+ v.MaChuyenBay + `" name="btnChonChieuDi">Chọn vé</button>
+                        </div>
+                    </div>
+                    <div class="ticket-option">
+                        <p>Chi tiết chuyến bay</p>
+                        <p>Chi tiết vé</p>
+                    </div>
+                </div>`;
+                $("#frmTicket").append(ticket);
+            })
+        })
+
+        $("#btnBooking").click(function () {
+            window.location = "/Booking/Checkout/?id=" + ma1 + "&giave=" + tienve1 + "&idKhuHoi=" + ma2 + "&giaveKhuHoi=" + tienve2
+        })
+    </script>
+
+}

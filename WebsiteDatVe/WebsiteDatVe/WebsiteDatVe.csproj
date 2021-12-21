@@ -1414,6 +1414,7 @@
     <Content Include="Assets\Client\select\select.js" />
     <Content Include="Assets\Client\style.css" />
     <Content Include="Assets\images\banner-flight.jpg" />
+    <Content Include="Assets\images\inbox.png" />
     <Content Include="Assets\images\Logo-Vietjet.png" />
     <Content Include="Assets\images\Logo-Bamboo.png" />
     <Content Include="favicon.ico" />
@@ -1798,6 +1799,7 @@
     <Content Include="Views\User\MyBooking.cshtml" />
     <Content Include="Views\Booking\Ticket.cshtml" />
     <Content Include="Views\Booking\returnUrl.cshtml" />
+    <Content Include="Views\Home\Search2Way.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

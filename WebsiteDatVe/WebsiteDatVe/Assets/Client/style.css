@@ -449,6 +449,22 @@ input:disabled{
     letter-spacing: 0.1rem;
 }
 
+.empty{
+    width:100%;
+    text-align:center;
+
+}
+
+.empty img{
+    width: 150px;
+}
+
+.empty p{
+   font-size:2rem;
+   text-transform:uppercase;
+   font-weight:700;
+}
+
 
 
 

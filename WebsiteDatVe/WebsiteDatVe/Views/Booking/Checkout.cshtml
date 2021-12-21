@@ -10,9 +10,11 @@
         <div class="booking">
             <div class="booking-info">
 
-                <div class="booking-header">
-                    <h3>@ViewBag.DiemDi → @ViewBag.DiemDen</h3>
-                    <p><span>@thongtin.NgayDi.ToString("dd/MM/yyyy")</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@thongtin.HangGhe</span></p>
+                <div id="frmheader">
+                    <div class="booking-header">
+                        <h3>@ViewBag.DiemDi → @ViewBag.DiemDen</h3>
+                        <p><span>@thongtin.NgayDi.ToString("dd/MM/yyyy")</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@thongtin.HangGhe</span></p>
+                    </div>
                 </div>
                 <div class="title">
                     <span>Thông tin liên hệ</span>
@@ -22,11 +24,11 @@
                     <div class="form-container">
                         <div class="control">
                             <p>Họ</p>
-                            <input type="text" id="ho" value="" />
+                            <input type="text" id="ho" value="" required />
                         </div>
                         <div class="control">
                             <p>Tên đệm & Tên</p>
-                            <input type="text" id="ten" value=""/>
+                            <input type="text" id="ten" value="" />
                         </div>
                         <div class="control">
                             <p>Số điện thoại di động</p>
@@ -184,7 +186,8 @@
                 </div>
             </div>
             <input id="txtTongTien" value="@ViewBag.TongCong" hidden />
-            <input id="txtMaChuyenBay" value="@ViewBag.MaChuyenBay" hidden />
+            <input id="txtMaChuyenBay" value="@ViewBag.MaChuyenBay1" hidden />
+            <input id="txtMaChuyenBayKH" value="@ViewBag.MaChuyenBay2" hidden />
         </div>
     </div>
 }
@@ -192,6 +195,17 @@
 
 @section scripts{
     <script>
+
+        $(document).ready(function () {
+            if ($('#txtMaChuyenBayKH').val().length) {
+                
+                let div = `<div class="booking-header" style="margin-top:2rem">
+                        <h3>@ViewBag.DiemDen → @ViewBag.DiemDi</h3>
+                        <p><span>@thongtin.NgayVe.ToString("dd/MM/yyyy")</span>  |  <span>@ViewBag.SoLuong hành khách</span>  |  <span>@thongtin.HangGhe</span></p>
+                    </div>`;
+                $('#frmheader').append(div)
+            }
+        })
 
         var arrCus = [];
 
@@ -234,6 +248,7 @@
         }
 
         $('#btnPayment').click(function () {
+            $('#btnPayment').prop("disabled", true);
             //list khách hàng
             CreateArray();
 
@@ -245,22 +260,41 @@
                 Email: $("#email").val()
             }
 
-            $.ajax({
-                type: 'post',
-                url: '/Booking/CreateTicket',
-                data: {
-                    arr: JSON.stringify(arrCus),
-                    nguoidat: JSON.stringify(obj),
-                    machuyenbay: $('#txtMaChuyenBay').val(),
-                    tongtien: $('#txtTongTien').val()
-                },
-                success: function (data) {
-                    if (data.code == 200) {
-                        alert('successul')
-                        window.location = "/Booking/ThanhToanMomo"
+            if ($('#txtMaChuyenBayKH').val().length) {
+                $.ajax({
+                    type: 'post',
+                    url: '/Booking/TaoVe',
+                    data: {
+                        arr: JSON.stringify(arrCus),
+                        nguoidat: JSON.stringify(obj),
+                        machuyenbay1: $('#txtMaChuyenBay').val(),
+                        machuyenbay2: $('#txtMaChuyenBayKH').val()
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert('successul')
+                            window.location = "/Booking/ThanhToanMomo"
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: '/Booking/TaoVe',
+                    data: {
+                        arr: JSON.stringify(arrCus),
+                        nguoidat: JSON.stringify(obj),
+                        machuyenbay1: $('#txtMaChuyenBay').val(),
+                        machuyenbay2: null
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert('successul')
+                            window.location = "/Booking/ThanhToanMomo"
+                        }
+                    }
+                })
+            }
         })
     </script>
 

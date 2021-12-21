@@ -13,6 +13,7 @@ namespace WebsiteDatVe.Models
         public int TreEm { get; set; }
         public int EmBe { get; set; }
         public DateTime NgayDi { get; set; }
+        public DateTime NgayVe { get; set; }
         public string HangGhe { get; set; }
 
     }

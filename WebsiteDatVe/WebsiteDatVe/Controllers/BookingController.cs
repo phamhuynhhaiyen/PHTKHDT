@@ -19,49 +19,78 @@ namespace WebsiteDatVe.Controllers
 
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public ActionResult Checkout(long id)
+        public ActionResult Checkout(long id, double giave, long? idKhuHoi, double giaveKhuHoi)
         {
             ThongTinDatVe thongtin = (ThongTinDatVe) Session["ThongTinDatVe"];
             ViewBag.DiemDi = db.SanBays.Where(x => x.MaSanBay.Equals(thongtin.DiemDi)).Select(x => x.TenSanBay).SingleOrDefault();
             ViewBag.DiemDen = db.SanBays.Where(x => x.MaSanBay.Equals(thongtin.DiemDen)).Select(x => x.TenSanBay).SingleOrDefault();
             ViewBag.SoLuong = thongtin.NguoiLon + thongtin.TreEm + thongtin.EmBe;
 
-            double giave = (double)db.ChuyenBays.Where(x => x.MaChuyenBay == id).Select(x => x.Gia).SingleOrDefault();
+            //double giave = (double)db.ChuyenBays.Where(x => x.MaChuyenBay == id).Select(x => x.Gia).SingleOrDefault();
             double giaHangVe = 1;
+            double giavetong = giave + giaveKhuHoi;
+
             if(thongtin.HangGhe.Trim() == "Phổ thông")
             {
-                giaHangVe = giave;
+                giaHangVe = giavetong;
             }
             else if (thongtin.HangGhe.Trim() == "Phổ thông đặc biệt")
             {
-                giaHangVe = giave * 1.2;
+                giaHangVe = giavetong * 1.2;
             }
             else if(thongtin.HangGhe.Trim() == "Thương gia")
             {
-                giaHangVe = giave * 1.4;
+                giaHangVe = giavetong * 1.4;
             }
             else if(thongtin.HangGhe.Trim() == "Hạng nhất")
             {
-                giaHangVe = giave * 1.8;
+                giaHangVe = giavetong * 1.8;
             }
 
             ViewBag.GiaVeNguoiLon = (giaHangVe * thongtin.NguoiLon);
-            ViewBag.GiaVeTreEm = giaHangVe * thongtin.TreEm;
+            ViewBag.GiaVeTreEm = giaHangVe*0.75 * thongtin.TreEm;
             ViewBag.GiaVeEmBe = 110000 * thongtin.EmBe;
-            double tongtam = giaHangVe * thongtin.NguoiLon + giaHangVe * thongtin.TreEm + 110000 * thongtin.EmBe;
+            double tongtam = giaHangVe * thongtin.NguoiLon + giaHangVe*0.75 * thongtin.TreEm + 110000 * thongtin.EmBe;
             ViewBag.TongTamTinh = tongtam;
             double thue = (double)(tongtam * 0.1);
             ViewBag.Thue = thue;
             ViewBag.TongCong = tongtam + thue;
 
-            ViewBag.MaChuyenBay = id;
+            ViewBag.MaChuyenBay1 = id;
+            ViewBag.MaChuyenBay2 = idKhuHoi;
+
+            Session["TongTien1"] = TinhGiaVe(giave);
+            Session["TongTien2"] = TinhGiaVe(giaveKhuHoi);
 
             return View();
         }
-        public JsonResult CreateTicket(string arr, long machuyenbay, double tongtien, string nguoidat)
+
+        public double TinhGiaVe(double gia)
         {
-            try
+            ThongTinDatVe thongtin = (ThongTinDatVe)Session["ThongTinDatVe"];
+            double giaHangVe = 1;
+            if (thongtin.HangGhe.Trim() == "Phổ thông")
             {
+                giaHangVe = gia;
+            }
+            else if (thongtin.HangGhe.Trim() == "Phổ thông đặc biệt")
+            {
+                giaHangVe = gia * 1.2;
+            }
+            else if (thongtin.HangGhe.Trim() == "Thương gia")
+            {
+                giaHangVe = gia * 1.4;
+            }
+            else if (thongtin.HangGhe.Trim() == "Hạng nhất")
+            {
+                giaHangVe = gia * 1.8;
+            }
+            double tongtien = giaHangVe * thongtin.NguoiLon + giaHangVe * 0.75 * thongtin.TreEm + 110000 * thongtin.EmBe;
+            return tongtien + tongtien * 0.1;
+        }
+
+        public Ve CreateTicket(string arr, long? machuyenbay, double tongtien, string nguoidat)
+        {
                 var listCus = new JavaScriptSerializer().Deserialize<List<KhachHang>>(arr);
                 var obj = new JavaScriptSerializer().Deserialize<NguoiDatVe>(nguoidat);
 
@@ -84,8 +113,8 @@ namespace WebsiteDatVe.Controllers
                 db.SaveChanges();
 
                 //Tạo sesion 
-                Session["TongTien"] = tongtien;
-                Session["MaVe"] = ve.MaVe;
+                //Session["TongTien"] = tongtien;
+                //Session["MaVe"] = ve.MaVe;
 
                 //Thêm khách hàng
                 foreach (var item in listCus)
@@ -114,12 +143,29 @@ namespace WebsiteDatVe.Controllers
                 db.SaveChanges();
 
 
-                return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
+                return ve;
         }
+
+        public JsonResult TaoVe(string arr, long machuyenbay1, long? machuyenbay2, string nguoidat)
+        {
+            try {
+                double tongtien1 = (double) Session["TongTien1"];
+                double tongtien2 = (double)Session["TongTien2"];
+
+                Ve ve1 = CreateTicket(arr, machuyenbay1, tongtien1, nguoidat);
+                Session["MaVe1"] = ve1.MaVe;
+
+                if(machuyenbay2 != null)
+                {
+                    Ve ve2 = CreateTicket(arr, machuyenbay2, tongtien1, nguoidat);
+                    Session["MaVe2"] = ve2.MaVe;
+                }
+
+                return Json(new { code = 200 }, JsonRequestBehavior.AllowGet);
+            }
             catch (Exception e)
             {
-                return Json(new { code = 500, msg = e.Message
-    }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = 500, msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -137,6 +183,7 @@ namespace WebsiteDatVe.Controllers
         
         public async Task<ActionResult> ThanhToanMomo()
         {
+            double tongtien = (double)Session["TongTien1"] + (double)Session["TongTien2"];
 
             string partnerCode = "MOMODDI520210624";
             string accessKey = "xc5ROj205YDvqrBn";
@@ -145,7 +192,7 @@ namespace WebsiteDatVe.Controllers
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
             string orderInfo = "THANH TOÁN VÉ MÁY BAY";
-            string amount = Session["TongTien"].ToString();
+            string amount = tongtien+"";
             string redirectUrl = "http://localhost:55480/Booking/returnUrl";
             string ipnUrl = "http://localhost:55480/Booking/notifyurl";
             string requestType = "captureWallet";
@@ -202,22 +249,38 @@ namespace WebsiteDatVe.Controllers
 
             //Thành công
 
-            string mave = Session["MaVe"].ToString();
+            string mave1 = Session["MaVe1"].ToString();
+            
             if (Request.QueryString["message"].Equals("Successful."))
             {
-                ViewBag.Message = "Thanh toán thành công!";
+                ViewBag.Message = "Đặt vé thành công! Vui lòng vào lịch sử đặt vé để kiểm tra";
                 //Thay đổi trạng thái vé
-                Ve ve = (from v in db.Ves where v.MaVe == mave select v).FirstOrDefault();
-                ve.TinhTrang = "Paid";
+                Ve ve1 = (from v in db.Ves where v.MaVe == mave1 select v).FirstOrDefault();
+                ve1.TinhTrang = "Paid";
                 db.SaveChanges();
+
+                if (Session["MaVe2"] != null)
+                {
+                    string mave2 = Session["MaVe2"].ToString();
+                    Ve ve2 = (from v in db.Ves where v.MaVe == mave2 select v).FirstOrDefault();
+                    ve2.TinhTrang = "Paid";
+                    db.SaveChanges();
+                }
             }
             else
             {
                 ViewBag.Message = "Thanh toán thất bại!";
                 //Thay đổi trạng thái vé
-                Ve ve = (from v in db.Ves where v.MaVe == mave select v).FirstOrDefault();
-                ve.TinhTrang = "Canceled";
+                Ve ve1 = (from v in db.Ves where v.MaVe == mave1 select v).FirstOrDefault();
+                ve1.TinhTrang = "Canceled";
                 db.SaveChanges();
+                if (Session["MaVe2"] != null)
+                {
+                    string mave2 = Session["MaVe2"].ToString();
+                    Ve ve2 = (from v in db.Ves where v.MaVe == mave2 select v).FirstOrDefault();
+                    ve2.TinhTrang = "Canceled";
+                    db.SaveChanges();
+                }
                 return View();
                 
             }

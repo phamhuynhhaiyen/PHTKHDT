@@ -27,6 +27,15 @@
 
     </div>
 
+    @if (Model.Count == 0)
+    {
+        <div class="empty">
+            <img src="~/Assets/images/inbox.png" />
+            <p>Không tìm thấy chuyến bay phù hợp</p>
+        </div>
+
+    }
+
     <div class="ticket-container">
         @foreach (var item in Model)
         {
@@ -50,9 +59,9 @@
                         </div>
                     </div>
                     <div class="right">
-                        <div class="icon"><i class="far fa-bookmark"></i></div>
+                        <div class="icon"><i class="far fa-bookmark"  id="@item.MaChuyenBay"></i></div>
                         <h3>@item.Gia.GetValueOrDefault(0).ToString("N0")  VNĐ/khách</h3>
-                        <button id="@item.MaChuyenBay" name="btnChonVe">Chọn vé</button>
+                        <button id="@item.MaChuyenBay" name="btnChonVe" class="@item.Gia" >Chọn vé</button>
                     </div>
                 </div>
                 <div class="ticket-option">
@@ -71,8 +80,24 @@
             if ($('#session').val() == 0) {
                 $('.sign-in').addClass('show')
             } else {
-                window.location = "/Booking/Checkout/" + this.id
+                window.location = "/Booking/Checkout/?id=" + this.id + "&giave=" + this.className +"&idKhuHoi=null&giaveKhuHoi="+0
             }
+        })
+
+        $(".fa-bookmark").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/User/SavedTicket ',
+                data: {
+                    id: this.id,
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert("Lưu vé thành công. Bạn có thể vào mực đã lưu để xem chi tiết.");
+                    }
+                }
+
+            });
         })
     </script>
 }
